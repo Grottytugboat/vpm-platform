@@ -9,26 +9,27 @@
 <title>VPM | Project Command Centre</title>
 <link rel="icon" href="/images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a1628;--surface:#0f1d32;--surface2:#142640;--border:#1e3454;--border-light:#264060;
+  --bg:#0a1628;--surface:#0f1d32;--surface2:#142640;--surface3:#1a2f4e;--border:#1e3454;--border-light:#264060;
   --text:#e8edf5;--text2:#7b8faa;--text3:#4a5e78;
   --blue:#2d8cf0;--blue-light:#5ba8f7;--blue-dim:rgba(45,140,240,.1);--blue-glow:rgba(45,140,240,.25);
-  --sky:#48c9f5;--sky-dim:rgba(72,201,245,.1);
+  --sky:#48c9f5;--sky-dim:rgba(72,201,245,.08);
   --navy:#1a3a6c;
-  --green:#34d399;--green-dim:rgba(52,211,153,.08);
-  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.08);
-  --red:#ef4444;--red-dim:rgba(239,68,68,.08);
+  --green:#34d399;--green-dim:rgba(52,211,153,.08);--green-border:rgba(52,211,153,.18);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.08);--amber-border:rgba(245,158,11,.18);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.08);--red-border:rgba(239,68,68,.18);
   --font:'Inter',system-ui,sans-serif;
   --mono:'JetBrains Mono',monospace;
+  --radius:12px;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
 a{color:inherit;text-decoration:none}
 
-/* LOGIN */
+/* ═══ LOGIN ═══ */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,#0a1628 0%,#0d1e35 100%)}
 .login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px;max-width:420px;width:100%;text-align:center}
 .login-logo{width:200px;margin:0 auto 24px}
@@ -40,21 +41,28 @@ a{color:inherit;text-decoration:none}
 .login-btn:hover{background:var(--blue-light)}
 .login-error{color:var(--red);font-size:12px;margin-top:8px;display:none}
 
-/* LAYOUT */
+/* ═══ LAYOUT ═══ */
 .app{display:none}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(15,29,50,.85)}
 .topbar-left{display:flex;align-items:center;gap:12px}
 .topbar-logo{height:36px}
 .topbar-title{font-size:14px;font-weight:700;letter-spacing:-.3px}
 .topbar-sub{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase}
+.topbar-right{display:flex;align-items:center;gap:12px}
 .topbar-user{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2)}
 .topbar-avatar{width:32px;height:32px;background:var(--blue-dim);border:1px solid rgba(45,140,240,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue-light)}
-
 .main{max-width:1200px;margin:0 auto;padding:24px}
 
-/* STATS */
+/* ═══ BREADCRUMB ═══ */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text3);margin-bottom:20px}
+.breadcrumb a{color:var(--text2);transition:color .2s;cursor:pointer}
+.breadcrumb a:hover{color:var(--blue-light)}
+.breadcrumb span{color:var(--text)}
+.bc-sep{font-size:10px}
+
+/* ═══ STATS ═══ */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
 .stat-label{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
 .stat-value{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1}
 .stat-change{font-family:var(--mono);font-size:10px;margin-top:6px}
@@ -63,50 +71,46 @@ a{color:inherit;text-decoration:none}
 @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
 
-/* SECTION HEADERS */
+/* ═══ SECTION HEADERS ═══ */
 .section-head{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px}
 .section-title{font-size:18px;font-weight:800;letter-spacing:-.5px}
-.section-badge{font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:6px;letter-spacing:.5px}
 
-/* JOB CARDS */
+/* ═══ JOB CARDS ═══ */
 .jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.job-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s}
-.job-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .25s}
+.job-card:hover{border-color:var(--border-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
 .job-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
 .job-name{font-size:15px;font-weight:700;letter-spacing:-.3px}
 .job-client{font-size:12px;color:var(--text2);margin-top:2px}
 .job-status{font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:6px;letter-spacing:.5px;font-weight:600;white-space:nowrap}
-.status-active{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,211,153,.15)}
-.status-review{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.15)}
-.status-risk{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.15)}
+.status-active{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.status-review{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)}
+.status-risk{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)}
 .status-complete{background:var(--blue-dim);color:var(--blue-light);border:1px solid rgba(45,140,240,.15)}
 
-/* PROGRESS BAR */
-.job-progress{margin:12px 0}
+/* ═══ PROGRESS BAR ═══ */
 .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .progress-label{font-size:11px;color:var(--text3)}
 .progress-pct{font-family:var(--mono);font-size:11px;font-weight:600}
-.progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;border-radius:3px;transition:width .5s}
-.fill-green{background:var(--green)}
-.fill-amber{background:var(--amber)}
-.fill-red{background:var(--red)}
-.fill-blue{background:var(--blue)}
+.progress-track{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.fill-green{background:linear-gradient(90deg,#22c55e,var(--green))}
+.fill-amber{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.fill-red{background:linear-gradient(90deg,#dc2626,var(--red))}
+.fill-blue{background:linear-gradient(90deg,#2563eb,var(--blue-light))}
 
-/* CHECKLIST ITEMS */
+/* ═══ JOB META ═══ */
 .job-checklists{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .cl-tag{font-family:var(--mono);font-size:9px;padding:4px 8px;border-radius:4px;letter-spacing:.3px;display:flex;align-items:center;gap:4px}
 .cl-done{background:var(--green-dim);color:var(--green)}
 .cl-pending{background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
 .cl-overdue{background:var(--red-dim);color:var(--red)}
-
-/* JOB META */
 .job-meta{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .meta-item{font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:4px}
 
-/* ALERTS */
+/* ═══ ALERTS ═══ */
 .alert-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
-.alert{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:background .2s}
+.alert{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:all .2s}
 .alert:hover{background:var(--surface2)}
 .alert-icon{font-size:18px;flex-shrink:0}
 .alert-text{font-size:13px;flex:1}
@@ -116,39 +120,144 @@ a{color:inherit;text-decoration:none}
 .alert-warning{border-left:3px solid var(--amber)}
 .alert-info{border-left:3px solid var(--blue)}
 
-/* TABS */
+/* ═══ TABS ═══ */
 .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:20px}
 .tab{flex:1;padding:10px 16px;text-align:center;font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;transition:all .2s;color:var(--text2)}
 .tab.active{background:var(--blue);color:#fff}
 .tab:hover:not(.active){background:var(--surface2)}
 
-/* CHECKLIST VIEW */
-.checklist-view{display:none}
-.cl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.cl-back{padding:8px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
-.cl-back:hover{border-color:var(--border-light)}
-.cl-group{margin-bottom:24px}
-.cl-group-title{font-size:14px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.cl-group-count{font-family:var(--mono);font-size:10px;color:var(--text3)}
-.cl-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .2s}
-.cl-item:hover{border-color:var(--border-light)}
-.cl-check{width:22px;height:22px;border:2px solid var(--border-light);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.cl-item.done .cl-check{background:var(--green);border-color:var(--green)}
-.cl-item.done .cl-check::after{content:'✓';color:#fff;font-size:12px;font-weight:700}
-.cl-item.flagged .cl-check{border-color:var(--red)}
-.cl-item.done .cl-question{color:var(--text3);text-decoration:line-through}
-.cl-question{font-size:13px;flex:1;line-height:1.5}
-.cl-risk{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:4px;font-weight:600;flex-shrink:0}
-.risk-green{background:var(--green-dim);color:var(--green)}
-.risk-amber{background:var(--amber-dim);color:var(--amber)}
-.risk-red{background:var(--red-dim);color:var(--red)}
-.risk-none{background:var(--surface2);color:var(--text3)}
+/* ═══════════════════════════════════════════════════════
+   JOB DETAIL VIEW (NEW)
+   ═══════════════════════════════════════════════════════ */
 
-/* FAB */
+.job-detail{display:none}
+
+/* Hero header */
+.jd-hero{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.jd-hero::before{content:'';position:absolute;top:0;right:0;width:300px;height:100%;background:linear-gradient(135deg,transparent 40%,var(--blue-dim));pointer-events:none}
+.jd-hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;position:relative}
+.jd-name{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+.jd-client{font-size:14px;color:var(--text2);margin-top:4px}
+.jd-hero-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
+.jd-meta-item{text-align:center;padding:12px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid rgba(255,255,255,.03)}
+.jd-meta-label{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.jd-meta-value{font-size:16px;font-weight:800;letter-spacing:-.3px}
+@media(max-width:600px){.jd-hero-meta{grid-template-columns:repeat(2,1fr)}}
+
+/* Overall progress ring area */
+.jd-progress-section{display:grid;grid-template-columns:160px 1fr;gap:24px;margin-bottom:20px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.jd-ring-wrap{display:flex;align-items:center;justify-content:center}
+.jd-ring{position:relative;width:120px;height:120px}
+.jd-ring svg{transform:rotate(-90deg)}
+.jd-ring-bg{fill:none;stroke:var(--surface2);stroke-width:8}
+.jd-ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)}
+.jd-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.jd-ring-pct{font-size:28px;font-weight:900;letter-spacing:-1px}
+.jd-ring-label{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3)}
+.jd-phase-list{display:flex;flex-direction:column;gap:8px}
+.jd-phase{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid transparent;transition:all .2s}
+.jd-phase.current{border-color:var(--blue);background:var(--blue-dim)}
+.jd-phase-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.jd-phase-dot.done{background:var(--green)}
+.jd-phase-dot.active{background:var(--blue);box-shadow:0 0 8px var(--blue-glow);animation:pulse-dot 2s infinite}
+.jd-phase-dot.pending{background:var(--surface);border:2px solid var(--border-light)}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.5}}
+.jd-phase-name{font-size:13px;font-weight:600;flex:1}
+.jd-phase-pct{font-family:var(--mono);font-size:11px;color:var(--text3);font-weight:700}
+@media(max-width:600px){.jd-progress-section{grid-template-columns:1fr}.jd-ring-wrap{margin-bottom:8px}}
+
+/* Checklist cards grid */
+.cl-cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:700px){.cl-cards-grid{grid-template-columns:1fr}}
+.cl-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.cl-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.cl-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.cl-card-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.cl-card-icon.cra{background:var(--red-dim);border:1px solid var(--red-border)}
+.cl-card-icon.wdc{background:var(--blue-dim);border:1px solid rgba(45,140,240,.15)}
+.cl-card-icon.itp{background:var(--amber-dim);border:1px solid var(--amber-border)}
+.cl-card-icon.qa{background:var(--green-dim);border:1px solid var(--green-border)}
+.cl-card-status{font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:6px;letter-spacing:.5px;font-weight:600}
+.cl-card-name{font-size:15px;font-weight:700;letter-spacing:-.3px;margin-bottom:2px}
+.cl-card-count{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.cl-card-progress{margin:16px 0 12px}
+.cl-card-sections{display:flex;flex-wrap:wrap;gap:4px}
+.cl-sec-tag{font-family:var(--mono);font-size:8px;padding:3px 7px;border-radius:4px;background:var(--surface2);color:var(--text3);letter-spacing:.3px;border:1px solid var(--border)}
+.cl-sec-tag.done{background:var(--green-dim);color:var(--green);border-color:var(--green-border)}
+.cl-card-arrow{position:absolute;bottom:18px;right:18px;font-size:18px;color:var(--text3);transition:all .25s}
+.cl-card:hover .cl-card-arrow{color:var(--blue-light);transform:translateX(4px)}
+
+/* Activity / timeline */
+.jd-activity{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.jd-activity-title{font-size:14px;font-weight:700;margin-bottom:16px}
+.activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border:none}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.activity-content{flex:1}
+.activity-text{font-size:13px;line-height:1.5}
+.activity-time{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px}
+
+/* Notes */
+.jd-notes{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px}
+.jd-notes-title{font-size:14px;font-weight:700;margin-bottom:12px}
+.jd-note-input{width:100%;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;resize:none;min-height:60px;transition:border .2s}
+.jd-note-input:focus{border-color:var(--blue)}
+.jd-note-btn{padding:8px 20px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s}
+.jd-note-btn:hover{background:var(--blue-light)}
+.note-item{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5}
+.note-item:last-child{border:none}
+.note-meta{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px}
+
+/* ═══════════════════════════════════════════════════════
+   CHECKLIST DETAIL VIEW (IMPROVED)
+   ═══════════════════════════════════════════════════════ */
+.checklist-view{display:none}
+
+/* Sticky checklist header */
+.cl-sticky{position:sticky;top:69px;z-index:50;background:var(--bg);padding:16px 0 12px;margin-bottom:8px}
+.cl-head-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cl-head-left{display:flex;align-items:center;gap:12px}
+.cl-head-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.cl-head-title{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.cl-head-sub{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.cl-head-stats{display:flex;gap:16px;align-items:center}
+.cl-head-stat{text-align:center}
+.cl-head-stat-val{font-size:16px;font-weight:800}
+.cl-head-stat-label{font-family:var(--mono);font-size:8px;letter-spacing:.5px;text-transform:uppercase;color:var(--text3)}
+.cl-big-progress{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.cl-big-progress .progress-fill{height:100%;border-radius:4px}
+
+/* Section accordion */
+.cl-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.cl-section:hover{border-color:var(--border-light)}
+.cl-section-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;transition:background .15s;user-select:none}
+.cl-section-header:hover{background:var(--surface2)}
+.cl-section-chevron{font-size:14px;color:var(--text3);transition:transform .25s;flex-shrink:0}
+.cl-section.open .cl-section-chevron{transform:rotate(90deg)}
+.cl-section-name{font-size:14px;font-weight:700;flex:1}
+.cl-section-progress{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cl-section-bar{width:80px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.cl-section-bar-fill{height:100%;border-radius:2px;transition:width .4s}
+.cl-section-pct{font-family:var(--mono);font-size:11px;font-weight:700;min-width:32px;text-align:right}
+.cl-section-body{display:none;padding:0 20px 16px}
+.cl-section.open .cl-section-body{display:block}
+
+/* Checklist items (improved) */
+.cli{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:all .15s;margin-bottom:4px;border:1px solid transparent}
+.cli:hover{background:var(--surface2);border-color:var(--border)}
+.cli-check{width:20px;height:20px;border:2px solid var(--border-light);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cli.done .cli-check{background:var(--green);border-color:var(--green)}
+.cli.done .cli-check::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
+.cli.done .cli-text{color:var(--text3);text-decoration:line-through}
+.cli-text{font-size:13px;flex:1;line-height:1.4}
+.cli-num{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:20px;flex-shrink:0}
+.cli-risk{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:4px;font-weight:600;flex-shrink:0}
+
+/* ═══ FAB ═══ */
 .fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:var(--blue);border:none;border-radius:16px;color:#fff;font-size:28px;cursor:pointer;z-index:90;box-shadow:0 4px 20px var(--blue-glow);display:flex;align-items:center;justify-content:center;transition:all .2s}
 .fab:hover{transform:scale(1.05);background:var(--blue-light)}
 
-/* MODAL */
+/* ═══ MODAL ═══ */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto}
@@ -162,8 +271,7 @@ a{color:inherit;text-decoration:none}
 .modal-btn.primary{background:var(--blue);color:#fff}
 .modal-btn.ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
 
-/* RESPONSIVE */
-@media(max-width:640px){.jobs-grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap}}
+@media(max-width:640px){.jobs-grid{grid-template-columns:1fr}.tabs{flex-wrap:wrap}.cl-head-stats{display:none}}
 </style>
 </head>
 <body>
@@ -188,59 +296,47 @@ a{color:inherit;text-decoration:none}
       <img src="/images/logo.png" class="topbar-logo" alt="VPM">
       <div><div class="topbar-title">Project Command Centre</div><div class="topbar-sub">Victorian Projects Mechanical</div></div>
     </div>
-    <div class="topbar-user">
-      <div class="topbar-avatar" id="user-avatar">AD</div>
-      <span id="user-name">Admin</span>
-    </div>
-  </div>
-
-  <div class="main" id="main-dashboard">
-    <!-- ALERTS -->
-    <div class="section-head"><div class="section-title">⚡ Needs Attention</div></div>
-    <div class="alert-list" id="alerts">
-      <div class="alert alert-urgent"><div class="alert-icon">🔴</div><div class="alert-text"><strong>Workshop Drawing Checklist</strong> overdue on <strong>Mernda Aged Care</strong> - was due 3 days ago</div><div class="alert-time">3d overdue</div></div>
-      <div class="alert alert-warning"><div class="alert-icon">🟡</div><div class="alert-text"><strong>ITP Site Inspection</strong> due tomorrow on <strong>Richmond Hotel Fitout</strong></div><div class="alert-time">Due tomorrow</div></div>
-      <div class="alert alert-info"><div class="alert-icon">🔵</div><div class="alert-text"><strong>Contract Risk Assessment</strong> submitted for review on <strong>Geelong Hospital Wing B</strong></div><div class="alert-time">2h ago</div></div>
-    </div>
-
-    <!-- STATS -->
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-label">Active Jobs</div><div class="stat-value">7</div><div class="stat-change stat-up">↑ 2 this month</div></div>
-      <div class="stat-card"><div class="stat-label">Checklists Due</div><div class="stat-value" style="color:var(--amber)">4</div><div class="stat-change stat-down">2 overdue</div></div>
-      <div class="stat-card"><div class="stat-label">Avg Completion</div><div class="stat-value">72%</div><div class="stat-change stat-up">↑ 8% vs last month</div></div>
-      <div class="stat-card"><div class="stat-label">Risk Score</div><div class="stat-value" style="color:var(--green)">LOW</div><div class="stat-change stat-up">All assessments current</div></div>
-    </div>
-
-    <!-- TABS -->
-    <div class="tabs">
-      <div class="tab active" onclick="showTab('active')">Active Jobs</div>
-      <div class="tab" onclick="showTab('review')">Needs Review</div>
-      <div class="tab" onclick="showTab('completed')">Completed</div>
-    </div>
-
-    <!-- JOBS -->
-    <div class="jobs-grid" id="jobs-grid"></div>
-  </div>
-
-  <!-- CHECKLIST VIEW -->
-  <div class="checklist-view" id="checklist-view">
-    <div class="cl-header">
-      <button class="cl-back" onclick="showDashboard()">← Back to Jobs</button>
-      <div style="text-align:right">
-        <div style="font-size:16px;font-weight:800" id="cl-job-name"></div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--text3)" id="cl-job-client"></div>
+    <div class="topbar-right">
+      <div class="topbar-user">
+        <div class="topbar-avatar">AD</div>
+        <span>Admin</span>
       </div>
     </div>
-    <div class="tabs" id="cl-tabs"></div>
-    <div style="margin-bottom:16px">
-      <div class="progress-header"><span class="progress-label" id="cl-progress-label">Progress</span><span class="progress-pct" id="cl-progress-pct">0%</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-blue" id="cl-progress-fill" style="width:0"></div></div>
-    </div>
-    <div id="cl-content"></div>
   </div>
 
-  <!-- FAB -->
-  <button class="fab" onclick="openNewJob()">+</button>
+  <div class="main">
+    <!-- ═══ DASHBOARD ═══ -->
+    <div id="view-dashboard">
+      <div class="section-head"><div class="section-title">⚡ Needs Attention</div></div>
+      <div class="alert-list">
+        <div class="alert alert-urgent"><div class="alert-icon">🔴</div><div class="alert-text"><strong>Workshop Drawing Checklist</strong> overdue on <strong>Mernda Aged Care</strong> - was due 3 days ago</div><div class="alert-time">3d overdue</div></div>
+        <div class="alert alert-warning"><div class="alert-icon">🟡</div><div class="alert-text"><strong>ITP Site Inspection</strong> due tomorrow on <strong>Richmond Hotel Fitout</strong></div><div class="alert-time">Due tomorrow</div></div>
+        <div class="alert alert-info"><div class="alert-icon">🔵</div><div class="alert-text"><strong>Contract Risk Assessment</strong> submitted for review on <strong>Geelong Hospital Wing B</strong></div><div class="alert-time">2h ago</div></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Active Jobs</div><div class="stat-value">7</div><div class="stat-change stat-up">↑ 2 this month</div></div>
+        <div class="stat-card"><div class="stat-label">Checklists Due</div><div class="stat-value" style="color:var(--amber)">4</div><div class="stat-change stat-down">2 overdue</div></div>
+        <div class="stat-card"><div class="stat-label">Avg Completion</div><div class="stat-value">72%</div><div class="stat-change stat-up">↑ 8% vs last month</div></div>
+        <div class="stat-card"><div class="stat-label">Risk Score</div><div class="stat-value" style="color:var(--green)">LOW</div><div class="stat-change stat-up">All assessments current</div></div>
+      </div>
+
+      <div class="tabs" id="dash-tabs">
+        <div class="tab active" onclick="showTab('active',this)">Active Jobs</div>
+        <div class="tab" onclick="showTab('review',this)">Needs Review</div>
+        <div class="tab" onclick="showTab('completed',this)">Completed</div>
+      </div>
+      <div class="jobs-grid" id="jobs-grid"></div>
+    </div>
+
+    <!-- ═══ JOB DETAIL ═══ -->
+    <div class="job-detail" id="view-job"></div>
+
+    <!-- ═══ CHECKLIST DETAIL ═══ -->
+    <div class="checklist-view" id="view-checklist"></div>
+  </div>
+
+  <button class="fab" id="fab" onclick="openNewJob()">+</button>
 </div>
 
 <!-- NEW JOB MODAL -->
@@ -260,19 +356,81 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <script>
-// ═══════════ DATA ═══════════
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
 const JOBS = [
-  { id:1, name:'Mernda Aged Care', client:'Probuild', pm:'Josh Thompson', value:'$680,000', status:'active', completion:45, checklists:{ cra:{done:60,total:60}, wdc:{done:42,total:120,overdue:true}, itp:{done:0,total:85}, qa:{done:0,total:65} }},
-  { id:2, name:'Richmond Hotel Fitout', client:'Built', pm:'Mark Sullivan', value:'$320,000', status:'active', completion:72, checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:55,total:85,due:'tomorrow'}, qa:{done:0,total:65} }},
-  { id:3, name:'Geelong Hospital Wing B', client:'Lendlease', pm:'Josh Thompson', value:'$1,200,000', status:'review', completion:15, checklists:{ cra:{done:48,total:60,review:true}, wdc:{done:0,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} }},
-  { id:4, name:'Docklands Tower 3 - Lvl 8-12', client:'Multiplex', pm:'Dan Kelly', value:'$890,000', status:'active', completion:88, checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:78,total:85}, qa:{done:45,total:65} }},
-  { id:5, name:'Bendigo TAFE Upgrade', client:'Kane Constructions', pm:'Mark Sullivan', value:'$210,000', status:'active', completion:30, checklists:{ cra:{done:60,total:60}, wdc:{done:36,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} }},
-  { id:6, name:'Airport West Industrial', client:'Vaughan Constructions', pm:'Josh Thompson', value:'$450,000', status:'complete', completion:100, checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:85,total:85}, qa:{done:65,total:65} }},
-  { id:7, name:'Ballarat Base Hospital', client:'CPB Contractors', pm:'Dan Kelly', value:'$1,500,000', status:'active', completion:8, checklists:{ cra:{done:12,total:60}, wdc:{done:0,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} }}
+  { id:1, name:'Mernda Aged Care', client:'Probuild', pm:'Josh Thompson', value:'$680,000', status:'active', start:'2025-11-12', completion:45,
+    checklists:{ cra:{done:60,total:60}, wdc:{done:42,total:120,overdue:true}, itp:{done:0,total:85}, qa:{done:0,total:65} },
+    notes:['Awaiting revised mechanical spec from architect','Builder requesting earlier completion - discuss at next site meeting'],
+    activity:[
+      {text:'Workshop Drawing Checklist became overdue',dot:'var(--red)',time:'3 days ago'},
+      {text:'Josh completed Contract Risk Assessment (60/60)',dot:'var(--green)',time:'1 week ago'},
+      {text:'Ductwork submittal approved by Probuild',dot:'var(--blue)',time:'2 weeks ago'},
+      {text:'Job created and assigned to Josh Thompson',dot:'var(--text3)',time:'Nov 12, 2025'}
+    ]
+  },
+  { id:2, name:'Richmond Hotel Fitout', client:'Built', pm:'Mark Sullivan', value:'$320,000', status:'active', start:'2025-10-05', completion:72,
+    checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:55,total:85,due:'tomorrow'}, qa:{done:0,total:65} },
+    notes:['Chiller delivery delayed by 2 weeks - adjust program'],
+    activity:[
+      {text:'ITP Site Inspection due tomorrow',dot:'var(--amber)',time:'Today'},
+      {text:'Workshop Drawings fully completed (120/120)',dot:'var(--green)',time:'2 days ago'},
+      {text:'Mark updated site inspection schedule',dot:'var(--blue)',time:'4 days ago'}
+    ]
+  },
+  { id:3, name:'Geelong Hospital Wing B', client:'Lendlease', pm:'Josh Thompson', value:'$1,200,000', status:'review', start:'2026-01-20', completion:15,
+    checklists:{ cra:{done:48,total:60,review:true}, wdc:{done:0,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} },
+    notes:['High-value job. Lendlease have strict documentation requirements','Need to confirm sub-contractor availability before committing to program'],
+    activity:[
+      {text:'Contract Risk Assessment submitted for review (48/60)',dot:'var(--amber)',time:'2 hours ago'},
+      {text:'Job created - awaiting contract finalisation',dot:'var(--text3)',time:'Jan 20, 2026'}
+    ]
+  },
+  { id:4, name:'Docklands Tower 3 - Lvl 8-12', client:'Multiplex', pm:'Dan Kelly', value:'$890,000', status:'active', start:'2025-08-15', completion:88,
+    checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:78,total:85}, qa:{done:45,total:65} },
+    notes:['Practical completion target: March 15, 2026'],
+    activity:[
+      {text:'QA Check progressing well (45/65)',dot:'var(--green)',time:'Yesterday'},
+      {text:'ITP nearing completion (78/85)',dot:'var(--blue)',time:'3 days ago'},
+      {text:'Dan flagged minor defect in Level 10 pipework',dot:'var(--amber)',time:'1 week ago'}
+    ]
+  },
+  { id:5, name:'Bendigo TAFE Upgrade', client:'Kane Constructions', pm:'Mark Sullivan', value:'$210,000', status:'active', start:'2025-12-01', completion:30,
+    checklists:{ cra:{done:60,total:60}, wdc:{done:36,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} },
+    notes:['Regional job. Travel costs factored into estimate.'],
+    activity:[
+      {text:'Workshop Drawings 30% complete (36/120)',dot:'var(--blue)',time:'2 days ago'},
+      {text:'Contract Risk Assessment completed',dot:'var(--green)',time:'Dec 8, 2025'}
+    ]
+  },
+  { id:6, name:'Airport West Industrial', client:'Vaughan Constructions', pm:'Josh Thompson', value:'$450,000', status:'complete', start:'2025-05-20', completion:100,
+    checklists:{ cra:{done:60,total:60}, wdc:{done:120,total:120}, itp:{done:85,total:85}, qa:{done:65,total:65} },
+    notes:['Job complete. All documentation submitted. Defects liability period ends May 2026.'],
+    activity:[
+      {text:'All checklists completed. Job marked as complete.',dot:'var(--green)',time:'Feb 10, 2026'},
+      {text:'Client sign-off received',dot:'var(--green)',time:'Feb 8, 2026'}
+    ]
+  },
+  { id:7, name:'Ballarat Base Hospital', client:'CPB Contractors', pm:'Dan Kelly', value:'$1,500,000', status:'active', start:'2026-02-01', completion:8,
+    checklists:{ cra:{done:12,total:60}, wdc:{done:0,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} },
+    notes:['Largest job on the books. CPB have strict safety requirements.','Insurance reviewed and confirmed adequate.'],
+    activity:[
+      {text:'Contract Risk Assessment started (12/60)',dot:'var(--amber)',time:'3 days ago'},
+      {text:'Job created and assigned to Dan Kelly',dot:'var(--text3)',time:'Feb 1, 2026'}
+    ]
+  }
 ];
 
+const CL_META = {
+  cra: { name:'Contract Risk Assessment', short:'CRA', icon:'⚠️', iconCls:'cra', desc:'Risk evaluation of contract terms, financials, and compliance' },
+  wdc: { name:'Workshop Drawing Checklist', short:'WDC', icon:'📐', iconCls:'wdc', desc:'Verification of all workshop and coordination drawings' },
+  itp: { name:'Inspection & Test Plan', short:'ITP', icon:'🔍', iconCls:'itp', desc:'Staged inspection and testing through construction lifecycle' },
+  qa:  { name:'Quality Assurance Check', short:'QA', icon:'✅', iconCls:'qa', desc:'Workmanship, compliance, testing and handover quality' }
+};
+
 const CL_TEMPLATES = {
-  cra: { name:'Contract Risk Assessment', sections:[
+  cra: { sections:[
     { title:'Contract Terms', items:['Contract value confirmed and matches estimate','Payment terms reviewed (progress claims, retentions)','Liquidated damages clause reviewed','Defects liability period confirmed','Warranty obligations reviewed','Insurance requirements met','Security of payment terms confirmed','Subcontractor warranty obligations noted','Dispute resolution process reviewed','Contract execution deadline confirmed'] },
     { title:'Financial Risk', items:['Profit margin minimum 12% confirmed','Material cost escalation clause included','Variation process clearly defined','Retention terms acceptable','Credit check on builder completed','Payment history with builder reviewed','Bond/guarantee requirements reviewed','Cash flow forecast completed','Progress claim schedule confirmed','Final account process reviewed'] },
     { title:'Scope & Technical', items:['Scope of works clearly defined','Mechanical specifications reviewed','Hydraulic specifications reviewed','Fire services scope confirmed','BCA compliance requirements identified','Energy efficiency requirements noted','Commissioning requirements defined','As-built drawing requirements noted','Design responsibility clearly allocated','Interface with other trades identified'] },
@@ -280,7 +438,7 @@ const CL_TEMPLATES = {
     { title:'Site & Safety', items:['Site conditions inspected','Hazardous materials identified','Working at heights requirements','Confined space requirements','Hot works requirements','Existing services identified','Environmental requirements noted','Noise restrictions identified','Heritage/sensitive areas noted','Emergency procedures reviewed'] },
     { title:'Approvals & Compliance', items:['Building permit requirements','Council approvals required','Authority inspections required','AS/NZS standards compliance confirmed','Green Star/NABERS requirements','Fire engineering requirements','Acoustic requirements','Disability access requirements','Essential safety measures','Occupancy permit requirements'] }
   ]},
-  wdc: { name:'Workshop Drawing Checklist', sections:[
+  wdc: { sections:[
     { title:'General Arrangement', items:['Floor plan layout matches architectural drawings','Ceiling plan coordinated with other services','Section drawings provided where required','Equipment schedule matches specification','Legend and abbreviations complete','Drawing title block information correct','Revision history updated','Scale appropriate for detail level','North point indicated','Grid references match architectural'] },
     { title:'Ductwork', items:['Supply air duct routing confirmed','Return air duct routing confirmed','Exhaust duct routing confirmed','Outside air duct routing confirmed','Duct sizes match design calculations','Flexible duct connections shown','Fire damper locations marked','Volume control damper locations shown','Access doors for maintenance','Duct support details provided','Insulation requirements noted','Acoustic lining requirements shown','Kitchen exhaust duct material specified','Smoke exhaust duct details','Duct penetration details shown','Condensate drainage from ducts','Expansion joints in ductwork','Duct material specifications noted','Joining methods specified','Duct pressure class noted'] },
     { title:'Pipework', items:['Chilled water pipe routing confirmed','Hot water pipe routing confirmed','Condenser water pipe routing confirmed','Refrigerant pipe routing confirmed','Gas pipe routing confirmed','Pipe sizes match calculations','Pipe support details provided','Valve locations and types shown','Strainer locations shown','Flexible connections shown','Pipe insulation requirements noted','Pipe penetration details','Expansion loops/joints shown','Pressure test points indicated','Drain points shown','Air vent locations marked','Isolation valve locations','Non-return valve locations','Pipe gradient for drainage','Pipe material specifications'] },
@@ -288,14 +446,14 @@ const CL_TEMPLATES = {
     { title:'Hydraulic', items:['Sanitary drainage routing confirmed','Stormwater routing confirmed','Domestic water pipe routing confirmed','TMV locations confirmed','Hot water plant location confirmed','Backflow prevention devices shown','Disconnector/air gap details','Floor waste locations confirmed','Overflow provisions shown','Grease trap details (if required)','Sewer vent locations','Fire hydrant/hose reel connections','Sprinkler main routing confirmed','Gas meter location confirmed','Gas pipe material and routing','Water meter location','Pressure reduction requirements','Solar hot water (if applicable)','Rainwater tank connection (if applicable)','Thermostatic mixing details'] },
     { title:'Controls & Electrical', items:['BMS point schedule complete','Control valve schedule complete','Sensor locations shown','Thermostat locations confirmed','Control panel locations','Power supply requirements noted','Electrical connection details','Cable tray routing coordinated','Conduit routing shown','Emergency power requirements','Lighting for plant rooms','GPO locations in plant rooms','Switchboard modifications noted','VSD programming requirements','Fire mode operation noted','After-hours operation requirements','Energy metering requirements','Network connection requirements','Alarm/fault indication','Commissioning access points'] }
   ]},
-  itp: { name:'Inspection & Test Plan', sections:[
+  itp: { sections:[
     { title:'Pre-Installation', items:['Materials delivered match specifications','Equipment serial numbers recorded','Storage conditions appropriate','Damage inspection completed','Certificates of conformance received','Test certificates reviewed','Submittal approvals received','RFI responses received','Hold point notifications issued','Coordination drawings approved','Material safety data sheets available','Warranty documentation received','Installation methodology approved','Quality plan approved','Safety plan approved'] },
     { title:'Rough-In Stage', items:['Pipe penetrations sealed and fire-rated','Duct penetrations sealed and fire-rated','Supports installed as per engineering','Pipe pressure test completed','Duct pressure test completed','Insulation installed correctly','Valve tags installed','Equipment pads/bases level','Condensate drains tested','Floor wastes tested and flowing','Acoustic treatment installed','Access panels installed','Electrical rough-in coordinated','Control wiring installed','Sleeve installations confirmed'] },
     { title:'Fit-Off Stage', items:['Grilles and diffusers installed','Fixtures and fittings installed','Controls and sensors installed','Equipment connected and operational','Balancing dampers accessible','Isolation valves operational','Safety devices tested','Labels and signage installed','Touch-up painting complete','Clean and free of debris','Access maintained for maintenance','Ceiling coordination complete','As-built drawings updated','Test and balance commenced','BMS graphics complete'] },
     { title:'Commissioning', items:['Air balance report complete','Water balance report complete','Controls sequences verified','Safety interlocks tested','Fire mode operation tested','Emergency power changeover tested','Noise levels within specification','Vibration levels acceptable','Energy metering operational','Trend logging operational','Spare parts delivered','O&M manuals submitted','Training provided to building manager','Practical completion items listed','Defect list compiled'] },
     { title:'Documentation', items:['As-built drawings complete','O&M manuals accepted','Test certificates compiled','Warranty certificates compiled','Training records signed','Compliance certificates issued','Authority approvals obtained','Essential safety measures listed','Maintenance schedules provided','Energy compliance documentation','Green Star documentation (if required)','BCA compliance certificate','Occupancy permit documentation','Final account submitted','Project close-out checklist'] }
   ]},
-  qa: { name:'Quality Assurance Check', sections:[
+  qa: { sections:[
     { title:'Workmanship', items:['Pipework installed neatly and to trade standard','Ductwork joints sealed correctly','Equipment mounted level and plumb','Support spacing within specification','Insulation applied neatly without gaps','Lagging on valves and fittings complete','No visible damage to equipment','Labels readable and positioned correctly','Access maintained to all service points','General site cleanliness maintained'] },
     { title:'Compliance', items:['Installation matches approved drawings','Material specifications met','Safety devices correctly rated','Fire rating maintained at penetrations','Acoustic requirements met','Electrical connections certified','Gas installations certified','Plumbing installations certified','BCA requirements satisfied','Essential safety measures operational'] },
     { title:'Testing', items:['Pressure tests passed and recorded','Flow rates within design parameters','Temperature differentials correct','Noise measurements within limits','Vibration measurements within limits','Control sequences operating correctly','Safety interlocks functional','Emergency systems tested','Balancing within tolerance','Commissioning data recorded'] },
@@ -304,23 +462,59 @@ const CL_TEMPLATES = {
   ]}
 };
 
-// ═══════════ AUTH ═══════════
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let currentView = 'dashboard';
+let currentJob = null;
+let currentCL = null;
+
+// ═══════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════
 function doLogin() {
-  const pass = document.getElementById('login-pass').value;
-  if (pass === 'vpm2026') {
+  if (document.getElementById('login-pass').value === 'vpm2026') {
     document.getElementById('login').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    renderJobs('active');
+    navigate('dashboard');
   } else {
     document.getElementById('login-error').style.display = 'block';
   }
 }
 document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-// ═══════════ DASHBOARD ═══════════
-function showTab(filter) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+function navigate(view, data) {
+  document.getElementById('view-dashboard').style.display = 'none';
+  document.getElementById('view-job').style.display = 'none';
+  document.getElementById('view-checklist').style.display = 'none';
+  document.getElementById('fab').style.display = 'none';
+  currentView = view;
+
+  if (view === 'dashboard') {
+    document.getElementById('view-dashboard').style.display = '';
+    document.getElementById('fab').style.display = '';
+    renderJobs('active');
+  } else if (view === 'job') {
+    currentJob = JOBS.find(j => j.id === data);
+    document.getElementById('view-job').style.display = '';
+    renderJobDetail();
+  } else if (view === 'checklist') {
+    currentCL = data;
+    document.getElementById('view-checklist').style.display = '';
+    renderChecklist();
+  }
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════
+function showTab(filter, tabEl) {
+  document.querySelectorAll('#dash-tabs .tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
   renderJobs(filter);
 }
 
@@ -331,114 +525,309 @@ function renderJobs(filter) {
                    JOBS.filter(j => j.status === 'complete');
 
   grid.innerHTML = filtered.map(j => {
-    const statusClass = j.status === 'active' ? 'status-active' : j.status === 'review' ? 'status-review' : 'status-complete';
-    const statusText = j.status === 'active' ? 'ACTIVE' : j.status === 'review' ? 'NEEDS REVIEW' : 'COMPLETE';
-    const fillClass = j.completion > 75 ? 'fill-green' : j.completion > 40 ? 'fill-blue' : j.completion > 20 ? 'fill-amber' : 'fill-red';
-
-    const clTags = Object.entries(j.checklists).map(([key, cl]) => {
-      const pct = Math.round((cl.done / cl.total) * 100);
-      const cls = cl.overdue ? 'cl-overdue' : pct === 100 ? 'cl-done' : 'cl-pending';
-      const names = { cra:'CRA', wdc:'WDC', itp:'ITP', qa:'QA' };
-      return `<span class="cl-tag ${cls}">${cl.overdue ? '⚠' : pct === 100 ? '✓' : ''} ${names[key]} ${pct}%</span>`;
+    const sc = j.status === 'active' ? 'status-active' : j.status === 'review' ? 'status-review' : 'status-complete';
+    const st = j.status === 'active' ? 'ACTIVE' : j.status === 'review' ? 'NEEDS REVIEW' : 'COMPLETE';
+    const fc = j.completion > 75 ? 'fill-green' : j.completion > 40 ? 'fill-blue' : j.completion > 20 ? 'fill-amber' : 'fill-red';
+    const tags = Object.entries(j.checklists).map(([k,c]) => {
+      const p = Math.round((c.done/c.total)*100);
+      const cls = c.overdue ? 'cl-overdue' : p===100 ? 'cl-done' : 'cl-pending';
+      return `<span class="cl-tag ${cls}">${c.overdue?'⚠':p===100?'✓':''} ${CL_META[k].short} ${p}%</span>`;
     }).join('');
-
-    return `<div class="job-card" onclick="openJob(${j.id})">
-      <div class="job-top"><div><div class="job-name">${j.name}</div><div class="job-client">${j.client}</div></div><span class="job-status ${statusClass}">${statusText}</span></div>
-      <div class="job-progress"><div class="progress-header"><span class="progress-label">Overall Completion</span><span class="progress-pct">${j.completion}%</span></div><div class="progress-bar"><div class="progress-fill ${fillClass}" style="width:${j.completion}%"></div></div></div>
-      <div class="job-checklists">${clTags}</div>
+    return `<div class="job-card" onclick="navigate('job',${j.id})">
+      <div class="job-top"><div><div class="job-name">${j.name}</div><div class="job-client">${j.client}</div></div><span class="job-status ${sc}">${st}</span></div>
+      <div style="margin:12px 0"><div class="progress-header"><span class="progress-label">Overall</span><span class="progress-pct">${j.completion}%</span></div><div class="progress-track"><div class="progress-fill ${fc}" style="width:${j.completion}%"></div></div></div>
+      <div class="job-checklists">${tags}</div>
       <div class="job-meta"><span class="meta-item">👤 ${j.pm}</span><span class="meta-item">💰 ${j.value}</span></div>
     </div>`;
-  }).join('') || '<div style="text-align:center;padding:40px;color:var(--text3)">No jobs in this category</div>';
+  }).join('') || '<div style="text-align:center;padding:40px;color:var(--text3)">No jobs here</div>';
 }
 
-// ═══════════ CHECKLIST VIEW ═══════════
-let currentJob = null, currentCL = null;
+// ═══════════════════════════════════════════════════════
+// JOB DETAIL
+// ═══════════════════════════════════════════════════════
+function renderJobDetail() {
+  const j = currentJob;
+  const totalDone = Object.values(j.checklists).reduce((s,c) => s + c.done, 0);
+  const totalAll = Object.values(j.checklists).reduce((s,c) => s + c.total, 0);
+  const overallPct = Math.round((totalDone/totalAll)*100);
+  const ringCirc = 2 * Math.PI * 50;
+  const ringOffset = ringCirc - (overallPct / 100) * ringCirc;
+  const ringColor = overallPct > 75 ? 'var(--green)' : overallPct > 40 ? 'var(--blue)' : overallPct > 20 ? 'var(--amber)' : 'var(--red)';
 
-function openJob(id) {
-  currentJob = JOBS.find(j => j.id === id);
-  document.getElementById('cl-job-name').textContent = currentJob.name;
-  document.getElementById('cl-job-client').textContent = currentJob.client;
-  document.getElementById('main-dashboard').style.display = 'none';
-  document.getElementById('checklist-view').style.display = 'block';
-  document.querySelector('.fab').style.display = 'none';
+  const sc = j.status === 'active' ? 'status-active' : j.status === 'review' ? 'status-review' : 'status-complete';
+  const st = j.status === 'active' ? 'ACTIVE' : j.status === 'review' ? 'NEEDS REVIEW' : 'COMPLETE';
 
-  const tabs = document.getElementById('cl-tabs');
-  const clNames = { cra:'Risk Assessment', wdc:'Workshop Drawings', itp:'Inspection & Test', qa:'QA Check' };
-  tabs.innerHTML = Object.entries(clNames).map(([key, name]) =>
-    `<div class="tab ${key === 'cra' ? 'active' : ''}" onclick="switchCL('${key}',this)">${name}</div>`
+  // Determine current phase
+  const phases = [
+    { key:'cra', name:'Risk Assessment', pct: Math.round((j.checklists.cra.done/j.checklists.cra.total)*100) },
+    { key:'wdc', name:'Workshop Drawings', pct: Math.round((j.checklists.wdc.done/j.checklists.wdc.total)*100) },
+    { key:'itp', name:'Inspection & Test', pct: Math.round((j.checklists.itp.done/j.checklists.itp.total)*100) },
+    { key:'qa', name:'QA & Handover', pct: Math.round((j.checklists.qa.done/j.checklists.qa.total)*100) }
+  ];
+  let activePhaseIdx = phases.findIndex(p => p.pct < 100);
+  if (activePhaseIdx === -1) activePhaseIdx = 3;
+
+  const clCards = Object.entries(j.checklists).map(([key, cl]) => {
+    const meta = CL_META[key];
+    const pct = Math.round((cl.done/cl.total)*100);
+    const fc = pct === 100 ? 'fill-green' : pct > 50 ? 'fill-blue' : pct > 0 ? 'fill-amber' : 'fill-red';
+    let statusCls, statusTxt;
+    if (cl.overdue) { statusCls = 'background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)'; statusTxt = 'OVERDUE'; }
+    else if (cl.review) { statusCls = 'background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)'; statusTxt = 'IN REVIEW'; }
+    else if (pct === 100) { statusCls = 'background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)'; statusTxt = 'COMPLETE'; }
+    else if (pct === 0) { statusCls = 'background:var(--surface2);color:var(--text3);border:1px solid var(--border)'; statusTxt = 'NOT STARTED'; }
+    else { statusCls = 'background:var(--blue-dim);color:var(--blue-light);border:1px solid rgba(45,140,240,.15)'; statusTxt = 'IN PROGRESS'; }
+
+    const template = CL_TEMPLATES[key];
+    let idx = 0;
+    const secTags = template.sections.map(sec => {
+      const secStart = idx;
+      idx += sec.items.length;
+      const secDone = Math.min(cl.done - secStart, sec.items.length);
+      const isDone = secDone >= sec.items.length;
+      return `<span class="cl-sec-tag ${isDone ? 'done' : ''}">${isDone ? '✓ ' : ''}${sec.title}</span>`;
+    }).join('');
+
+    return `<div class="cl-card" onclick="navigate('checklist','${key}')">
+      <div class="cl-card-top">
+        <div class="cl-card-icon ${meta.iconCls}">${meta.icon}</div>
+        <span class="cl-card-status" style="${statusCls}">${statusTxt}</span>
+      </div>
+      <div class="cl-card-name">${meta.name}</div>
+      <div class="cl-card-count">${cl.done} of ${cl.total} items complete</div>
+      <div class="cl-card-progress">
+        <div class="progress-header"><span class="progress-label">Progress</span><span class="progress-pct">${pct}%</span></div>
+        <div class="progress-track"><div class="progress-fill ${fc}" style="width:${pct}%"></div></div>
+      </div>
+      <div class="cl-card-sections">${secTags}</div>
+      <div class="cl-card-arrow">→</div>
+    </div>`;
+  }).join('');
+
+  const activityHtml = (j.activity || []).map(a =>
+    `<div class="activity-item"><div class="activity-dot" style="background:${a.dot}"></div><div class="activity-content"><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div></div>`
   ).join('');
 
-  switchCL('cra', tabs.querySelector('.tab'));
+  const notesHtml = (j.notes || []).map(n =>
+    `<div class="note-item">${n}<div class="note-meta">Added by ${j.pm}</div></div>`
+  ).join('');
+
+  document.getElementById('view-job').innerHTML = `
+    <div class="breadcrumb">
+      <a onclick="navigate('dashboard')">Dashboard</a>
+      <span class="bc-sep">›</span>
+      <span>${j.name}</span>
+    </div>
+
+    <div class="jd-hero">
+      <div class="jd-hero-top">
+        <div>
+          <div class="jd-name">${j.name}</div>
+          <div class="jd-client">${j.client} &middot; <span class="job-status ${sc}" style="display:inline-block;vertical-align:middle">${st}</span></div>
+        </div>
+      </div>
+      <div class="jd-hero-meta">
+        <div class="jd-meta-item"><div class="jd-meta-label">Project Manager</div><div class="jd-meta-value">${j.pm.split(' ')[0]}</div></div>
+        <div class="jd-meta-item"><div class="jd-meta-label">Contract Value</div><div class="jd-meta-value">${j.value}</div></div>
+        <div class="jd-meta-item"><div class="jd-meta-label">Start Date</div><div class="jd-meta-value">${new Date(j.start+'T00:00:00').toLocaleDateString('en-AU',{month:'short',day:'numeric',year:'numeric'})}</div></div>
+        <div class="jd-meta-item"><div class="jd-meta-label">Items Complete</div><div class="jd-meta-value">${totalDone}/${totalAll}</div></div>
+      </div>
+    </div>
+
+    <div class="jd-progress-section">
+      <div class="jd-ring-wrap">
+        <div class="jd-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle class="jd-ring-bg" cx="60" cy="60" r="50"/>
+            <circle class="jd-ring-fill" cx="60" cy="60" r="50" stroke="${ringColor}" stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringOffset}"/>
+          </svg>
+          <div class="jd-ring-center">
+            <div class="jd-ring-pct">${overallPct}%</div>
+            <div class="jd-ring-label">Complete</div>
+          </div>
+        </div>
+      </div>
+      <div class="jd-phase-list">
+        ${phases.map((p,i) => {
+          const dotCls = p.pct === 100 ? 'done' : i === activePhaseIdx ? 'active' : 'pending';
+          const rowCls = i === activePhaseIdx ? 'current' : '';
+          return `<div class="jd-phase ${rowCls}"><div class="jd-phase-dot ${dotCls}"></div><div class="jd-phase-name">${p.name}</div><div class="jd-phase-pct" style="color:${p.pct===100?'var(--green)':p.pct>0?'var(--blue-light)':'var(--text3)'}">${p.pct}%</div></div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="section-head"><div class="section-title">Checklists</div></div>
+    <div class="cl-cards-grid">${clCards}</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="jd-activity">
+        <div class="jd-activity-title">📋 Activity</div>
+        ${activityHtml || '<div style="color:var(--text3);font-size:13px;padding:8px 0">No activity yet</div>'}
+      </div>
+      <div class="jd-notes">
+        <div class="jd-notes-title">📝 Notes</div>
+        ${notesHtml}
+        <div style="margin-top:12px">
+          <textarea class="jd-note-input" id="note-input" placeholder="Add a note..."></textarea>
+          <button class="jd-note-btn" onclick="addNote()">Add Note</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Animate ring
+  setTimeout(() => {
+    const ring = document.querySelector('.jd-ring-fill');
+    if (ring) ring.style.strokeDashoffset = ringOffset;
+  }, 50);
 }
 
-function switchCL(key, tabEl) {
-  currentCL = key;
-  document.querySelectorAll('#cl-tabs .tab').forEach(t => t.classList.remove('active'));
-  if (tabEl) tabEl.classList.add('active');
+function addNote() {
+  const input = document.getElementById('note-input');
+  const text = input.value.trim();
+  if (!text) return;
+  currentJob.notes = currentJob.notes || [];
+  currentJob.notes.push(text);
+  input.value = '';
+  renderJobDetail();
+}
 
+// ═══════════════════════════════════════════════════════
+// CHECKLIST DETAIL
+// ═══════════════════════════════════════════════════════
+function renderChecklist() {
+  const j = currentJob;
+  const key = currentCL;
+  const meta = CL_META[key];
   const template = CL_TEMPLATES[key];
-  const jobCL = currentJob.checklists[key];
-  let doneCount = jobCL.done;
-  const totalCount = jobCL.total;
-  const pct = Math.round((doneCount / totalCount) * 100);
+  const cl = j.checklists[key];
+  let doneCount = cl.done;
+  const totalCount = cl.total;
+  const pct = Math.round((doneCount/totalCount)*100);
+  const fc = pct === 100 ? 'fill-green' : pct > 50 ? 'fill-blue' : pct > 0 ? 'fill-amber' : 'fill-red';
 
-  document.getElementById('cl-progress-label').textContent = template.name + ' Progress';
-  document.getElementById('cl-progress-pct').textContent = pct + '%';
-  document.getElementById('cl-progress-fill').style.width = pct + '%';
+  const riskLevels = ['LOW','MED','HIGH',''];
+  const riskClasses = ['risk-green','risk-amber','risk-red','risk-none'];
 
-  const content = document.getElementById('cl-content');
-  let itemIndex = 0;
-  content.innerHTML = template.sections.map(section => {
-    const items = section.items.map(q => {
-      itemIndex++;
-      const isDone = itemIndex <= doneCount;
-      const risks = ['risk-green','risk-amber','risk-red','risk-none'];
-      const risk = key === 'cra' ? risks[Math.floor(Math.random() * 4)] : '';
-      const riskLabel = risk === 'risk-green' ? 'LOW' : risk === 'risk-amber' ? 'MED' : risk === 'risk-red' ? 'HIGH' : '';
-      return `<div class="cl-item ${isDone ? 'done' : ''}" onclick="toggleItem(this)">
-        <div class="cl-check"></div>
-        <div class="cl-question">${q}</div>
-        ${riskLabel ? `<span class="cl-risk ${risk}">${riskLabel}</span>` : ''}
+  let globalIdx = 0;
+  const sectionsHtml = template.sections.map((sec, si) => {
+    let secDone = 0;
+    const itemsHtml = sec.items.map((q, qi) => {
+      globalIdx++;
+      const isDone = globalIdx <= doneCount;
+      if (isDone) secDone++;
+      const ri = key === 'cra' ? Math.floor(Math.random()*4) : 3;
+      const riskTag = ri < 3 ? `<span class="cli-risk ${riskClasses[ri]}">${riskLevels[ri]}</span>` : '';
+      return `<div class="cli ${isDone?'done':''}" onclick="toggleCLI(this)">
+        <span class="cli-num">${globalIdx}</span>
+        <div class="cli-check"></div>
+        <div class="cli-text">${q}</div>
+        ${riskTag}
       </div>`;
     }).join('');
 
-    const sectionDone = section.items.filter((_, i) => (itemIndex - section.items.length + i + 1) <= doneCount).length;
-    return `<div class="cl-group"><div class="cl-group-title">${section.title}<span class="cl-group-count">${sectionDone}/${section.items.length}</span></div>${items}</div>`;
+    const secPct = Math.round((secDone/sec.items.length)*100);
+    const secFc = secPct===100?'fill-green':secPct>50?'fill-blue':secPct>0?'fill-amber':'';
+
+    return `<div class="cl-section${si===0?' open':''}">
+      <div class="cl-section-header" onclick="toggleSection(this)">
+        <span class="cl-section-chevron">›</span>
+        <span class="cl-section-name">${sec.title}</span>
+        <div class="cl-section-progress">
+          <div class="cl-section-bar"><div class="cl-section-bar-fill ${secFc}" style="width:${secPct}%"></div></div>
+          <span class="cl-section-pct" style="color:${secPct===100?'var(--green)':secPct>0?'var(--text)':'var(--text3)'}">${secDone}/${sec.items.length}</span>
+        </div>
+      </div>
+      <div class="cl-section-body">${itemsHtml}</div>
+    </div>`;
   }).join('');
+
+  const remaining = totalCount - doneCount;
+
+  document.getElementById('view-checklist').innerHTML = `
+    <div class="breadcrumb">
+      <a onclick="navigate('dashboard')">Dashboard</a>
+      <span class="bc-sep">›</span>
+      <a onclick="navigate('job',${j.id})">${j.name}</a>
+      <span class="bc-sep">›</span>
+      <span>${meta.name}</span>
+    </div>
+
+    <div class="cl-sticky">
+      <div class="cl-head-row">
+        <div class="cl-head-left">
+          <div class="cl-head-icon ${meta.iconCls}" style="background:var(--${meta.iconCls==='cra'?'red':meta.iconCls==='wdc'?'blue':meta.iconCls==='itp'?'amber':'green'}-dim)">${meta.icon}</div>
+          <div>
+            <div class="cl-head-title">${meta.name}</div>
+            <div class="cl-head-sub">${j.name} &middot; ${j.client}</div>
+          </div>
+        </div>
+        <div class="cl-head-stats">
+          <div class="cl-head-stat"><div class="cl-head-stat-val" style="color:var(--green)">${doneCount}</div><div class="cl-head-stat-label">Done</div></div>
+          <div class="cl-head-stat"><div class="cl-head-stat-val" style="color:${remaining>0?'var(--amber)':'var(--green)'}">${remaining}</div><div class="cl-head-stat-label">Remaining</div></div>
+          <div class="cl-head-stat"><div class="cl-head-stat-val">${pct}%</div><div class="cl-head-stat-label">Complete</div></div>
+        </div>
+      </div>
+      <div class="cl-big-progress"><div class="progress-fill ${fc}" id="cl-main-bar" style="width:${pct}%"></div></div>
+    </div>
+
+    ${sectionsHtml}
+  `;
 }
 
-function toggleItem(el) {
+function toggleSection(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function toggleCLI(el) {
   el.classList.toggle('done');
-  updateCLProgress();
+  updateChecklistProgress();
 }
 
-function updateCLProgress() {
-  const total = document.querySelectorAll('#cl-content .cl-item').length;
-  const done = document.querySelectorAll('#cl-content .cl-item.done').length;
-  const pct = Math.round((done / total) * 100);
-  document.getElementById('cl-progress-pct').textContent = pct + '%';
-  document.getElementById('cl-progress-fill').style.width = pct + '%';
+function updateChecklistProgress() {
+  const total = document.querySelectorAll('#view-checklist .cli').length;
+  const done = document.querySelectorAll('#view-checklist .cli.done').length;
+  const pct = Math.round((done/total)*100);
+  const fc = pct===100?'fill-green':pct>50?'fill-blue':pct>0?'fill-amber':'fill-red';
+
+  // Update main bar
+  const bar = document.getElementById('cl-main-bar');
+  if (bar) { bar.style.width = pct+'%'; bar.className = 'progress-fill '+fc; }
+
+  // Update head stats
+  const stats = document.querySelectorAll('.cl-head-stat-val');
+  if (stats.length >= 3) {
+    stats[0].textContent = done;
+    stats[1].textContent = total - done;
+    stats[2].textContent = pct + '%';
+  }
+
+  // Update section bars
+  document.querySelectorAll('.cl-section').forEach(sec => {
+    const secTotal = sec.querySelectorAll('.cli').length;
+    const secDone = sec.querySelectorAll('.cli.done').length;
+    const sp = Math.round((secDone/secTotal)*100);
+    const sf = sp===100?'fill-green':sp>50?'fill-blue':sp>0?'fill-amber':'';
+    const barFill = sec.querySelector('.cl-section-bar-fill');
+    if (barFill) { barFill.style.width = sp+'%'; barFill.className = 'cl-section-bar-fill '+sf; }
+    const pctEl = sec.querySelector('.cl-section-pct');
+    if (pctEl) { pctEl.textContent = secDone+'/'+secTotal; pctEl.style.color = sp===100?'var(--green)':sp>0?'var(--text)':'var(--text3)'; }
+  });
 }
 
-function showDashboard() {
-  document.getElementById('main-dashboard').style.display = '';
-  document.getElementById('checklist-view').style.display = 'none';
-  document.querySelector('.fab').style.display = '';
-}
-
-// ═══════════ MODALS ═══════════
+// ═══════════════════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════════════════
 function openNewJob() { document.getElementById('modal-new-job').classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function createJob() {
   const name = document.getElementById('new-job-name').value;
   if (!name) return;
-  JOBS.push({ id: JOBS.length + 1, name, client: document.getElementById('new-job-client').value || 'TBC', pm: document.getElementById('new-job-pm').value, value: document.getElementById('new-job-value').value || 'TBC', status: 'active', completion: 0, checklists:{ cra:{done:0,total:60}, wdc:{done:0,total:120}, itp:{done:0,total:85}, qa:{done:0,total:65} }});
+  JOBS.push({ id:JOBS.length+1, name, client:document.getElementById('new-job-client').value||'TBC', pm:document.getElementById('new-job-pm').value, value:document.getElementById('new-job-value').value||'TBC', status:'active', start:document.getElementById('new-job-date').value||'2026-02-25', completion:0, checklists:{cra:{done:0,total:60},wdc:{done:0,total:120},itp:{done:0,total:85},qa:{done:0,total:65}}, notes:[], activity:[{text:'Job created',dot:'var(--text3)',time:'Just now'}] });
   closeModal('modal-new-job');
   renderJobs('active');
-  document.querySelectorAll('.tab')[0].classList.add('active');
 }
-
-document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target===m) m.classList.remove('open'); }));
 </script>
 </body>
 </html>
