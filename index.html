@@ -494,16 +494,16 @@ function navigate(view, data) {
   currentView = view;
 
   if (view === 'dashboard') {
-    document.getElementById('view-dashboard').style.display = '';
-    document.getElementById('fab').style.display = '';
+    document.getElementById('view-dashboard').style.display = 'block';
+    document.getElementById('fab').style.display = 'flex';
     renderJobs('active');
   } else if (view === 'job') {
     currentJob = JOBS.find(j => j.id === data);
-    document.getElementById('view-job').style.display = '';
+    document.getElementById('view-job').style.display = 'block';
     renderJobDetail();
   } else if (view === 'checklist') {
     currentCL = data;
-    document.getElementById('view-checklist').style.display = '';
+    document.getElementById('view-checklist').style.display = 'block';
     renderChecklist();
   }
   window.scrollTo(0, 0);
