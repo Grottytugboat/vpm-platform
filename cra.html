@@ -775,6 +775,17 @@ document.getElementById('nav-all').onclick = e => { e.preventDefault(); showView
 
 // Init
 loadJobs();
+if (window.location.search.includes('clearsignoffs=1')) {
+  JOBS.forEach(j => {
+    if (j.signoffs) {
+      j.signoffs.estimator = null;
+      j.signoffs.coordinator = null;
+      j.signoffs.pm = null;
+    }
+  });
+  saveJobs();
+  window.history.replaceState({}, '', window.location.pathname);
+}
 showView('dashboard');
 updateReminderBanner();
 </script>
