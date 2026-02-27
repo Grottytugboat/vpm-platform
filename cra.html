@@ -314,6 +314,7 @@ const CRA_ITEMS = [
 ];
 
 const ROLES = [
+  { id:'all', name:'All', range:'1-46', color:'#1a3a5f' },
   { id:'estimator', name:'Estimator', range:'1-17', color:'#0d6efd' },
   { id:'coordinator', name:'Project Co-ordinator', range:'18-30', color:'#6366f1' },
   { id:'pm', name:'Project Manager', range:'31-45', color:'#8b5cf6' },
@@ -540,7 +541,7 @@ function saveNote() {
 // ═══════════════════════════════════════════════════════
 // DETAIL VIEW
 // ═══════════════════════════════════════════════════════
-let activeRole = 'estimator';
+let activeRole = 'all';
 
 function renderDetail() {
   const j = currentJob;
@@ -563,7 +564,7 @@ function renderDetail() {
   `;
 
   document.getElementById('role-tabs').innerHTML = ROLES.map(r => {
-    const indices = CRA_ITEMS.map((it, i) => it.role === r.id ? i : -1).filter(i => i >= 0);
+    const indices = r.id === 'all' ? CRA_ITEMS.map((_, i) => i) : CRA_ITEMS.map((it, i) => it.role === r.id ? i : -1).filter(i => i >= 0);
     let roleDoneCount = 0;
     indices.forEach(i => { if (j.items[i]) roleDoneCount++; });
     return `<div class="role-tab ${r.id === activeRole ? 'active' : ''}" onclick="setRole('${r.id}')">${r.name}<br><small style="font-size:11px;opacity:.8">${roleDoneCount}/${indices.length}</small></div>`;
@@ -576,16 +577,34 @@ function renderDetail() {
 function setRole(role) {
   activeRole = role;
   document.querySelectorAll('.role-tab').forEach((t, i) => {
-    t.classList.toggle('active', ROLES[i].id === role);
+    t.classList.toggle('active', ROLES[i] && ROLES[i].id === role);
   });
   renderChecklistForRole();
 }
 
 function renderChecklistForRole() {
   const j = currentJob;
-  const items = CRA_ITEMS.map((it, i) => ({ ...it, index: i })).filter(it => it.role === activeRole);
+  const isAll = activeRole === 'all';
+  const items = CRA_ITEMS.map((it, i) => ({ ...it, index: i })).filter(it => isAll || it.role === activeRole);
 
-  document.getElementById('checklist-content').innerHTML = `
+  const roleLabel = r => ROLES.find(x => x.id === r)?.name || r;
+
+  document.getElementById('checklist-content').innerHTML = isAll
+    ? items.reduce((html, { text, index, role }) => {
+        const checked = j.items[index];
+        const notes = (j.itemNotes || {})[String(index)] || '';
+        const hasNote = !!notes.trim();
+        const prevItem = index > 0 ? CRA_ITEMS[index - 1] : null;
+        const showRoleHeader = !prevItem || prevItem.role !== role;
+        const roleHeader = showRoleHeader ? `<div class="checklist-section-title" style="margin-top:${index > 0 ? '24px' : '0'}">${roleLabel(role)}</div>` : '';
+        return html + roleHeader + `<div class="cli ${checked ? 'done' : ''}" onclick="toggleItem(${index})" data-idx="${index}">
+          <span class="cli-num">${index + 1}</span>
+          <div class="cli-check"></div>
+          <div class="cli-text">${text}</div>
+          <button class="cli-note-btn ${hasNote ? 'has-note' : ''}" onclick="event.stopPropagation();openNotesModal(${index})" title="${hasNote ? 'Edit note' : 'Add note'}">${hasNote ? '📝' : 'Note'}</button>
+        </div>`;
+      }, '')
+    : `
     <div class="checklist-section">
       <div class="checklist-section-title">${ROLES.find(r => r.id === activeRole).name} checks (${ROLES.find(r => r.id === activeRole).range})</div>
       <div class="checklist-items">
@@ -603,6 +622,9 @@ function renderChecklistForRole() {
       </div>
     </div>
   `;
+
+  const container = document.getElementById('checklist-content');
+  if (isAll) container.innerHTML = `<div class="checklist-section"><div class="checklist-items">${container.innerHTML}</div></div>`;
 }
 
 function toggleItem(idx) {
