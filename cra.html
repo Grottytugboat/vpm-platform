@@ -92,6 +92,11 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 .meta-box-value{font-size:16px;font-weight:700;color:var(--navy);word-break:break-word}
 @media(max-width:400px){.meta-box-value{font-size:14px}}
 
+/* ═══ PROJECT LOGO ═══ */
+.project-logo-wrap{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--glass-border)}
+.project-logo{display:block;max-height:80px;width:auto;object-fit:contain}
+@media(max-width:500px){.project-logo{max-height:60px}}
+
 /* ═══ ROLE TABS - Glass, responsive stack ═══ */
 .role-tabs{display:flex;flex-wrap:wrap;gap:6px;background:rgba(255,255,255,.5);backdrop-filter:blur(8px);padding:6px;border-radius:var(--radius);margin-bottom:24px;border:1px solid var(--glass-border)}
 .role-tab{padding:12px 14px;font-size:13px;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;color:var(--text2);white-space:nowrap;flex:1;min-width:120px;text-align:center}
@@ -335,6 +340,7 @@ const DEFAULT_JOBS = [
     completion: '2026-07-16',
     subcontractNo: 'RC072114',
     trade: 'Mechanical (Supply & Construction)',
+    projectLogo: 'images/toolern-vale-logo.png',
     items: new Array(46).fill(false),
     itemNotes: {},
     signoffs: { estimator: null, coordinator: null, pm: null, director: null },
@@ -546,7 +552,10 @@ function renderDetail() {
   const done = (j.items || []).filter(Boolean).length;
   const pct = Math.round((done / 46) * 100);
 
+  const logoUrl = j.projectLogo || (j.id === 'toolern-vale' ? 'images/toolern-vale-logo.png' : null);
+  const logoHtml = logoUrl ? `<div class="project-logo-wrap"><img src="${logoUrl}" alt="${j.name}" class="project-logo"></div>` : '';
   document.getElementById('contract-header').innerHTML = `
+    ${logoHtml}
     <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px">
       <div style="flex:1;min-width:0"><h1>${j.name}</h1><p class="sub">${j.client} · ${j.subcontractNo || ''} · ${j.trade || 'Mechanical'}</p></div>
       <div class="simpro-synced" title="Synced with Simpro">
