@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0d6efd">
+<meta name="theme-color" content="#1a3a5f">
 <meta name="robots" content="noindex,nofollow">
 <title>CRA Review | Victorian Projects</title>
-<link rel="icon" href="/images/victorian-projects-logo.png">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="images/favicon.svg">
+<link rel="alternate icon" href="images/victorian-projects-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Libre+Baskerville:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
 <style>
@@ -39,9 +41,17 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 .topbar-nav a{padding:10px 16px;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;border-radius:var(--radius-sm);transition:all .2s}
 .topbar-nav a:hover{color:var(--navy);background:var(--blue-dim)}
 .topbar-nav a.active{color:var(--navy);background:var(--blue-dim)}
+@media(max-width:480px){.topbar{padding:10px 14px}.topbar-logo img{height:32px}.topbar-nav a{padding:8px 12px;font-size:13px}}
+
+/* ═══ REMINDER BANNER - Waiting for you ═══ */
+.reminder-banner{display:none;background:linear-gradient(90deg,var(--amber),#ea580c);color:#fff;padding:12px 20px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 2px 12px rgba(217,119,6,.3);position:sticky;top:65px;z-index:99}
+.reminder-banner a{color:#fff;text-decoration:underline;margin-left:6px}
+.reminder-banner a:hover{text-decoration:none}
+.reminder-banner.visible{display:block}
 
 /* ═══ MAIN ═══ */
-.main{max-width:900px;margin:0 auto;padding:20px;padding-bottom:100px}
+.main{max-width:900px;margin:0 auto;padding:16px 20px;padding-bottom:100px}
+@media(max-width:480px){.main{padding:12px 14px}}
 
 /* ═══ ATTENTION HERO - Glass morphism ═══ */
 .attention-hero{background:linear-gradient(135deg,rgba(26,58,95,.9) 0%,rgba(37,99,235,.9) 100%);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius);padding:32px;color:#fff;margin-bottom:24px;box-shadow:var(--shadow-glass)}
@@ -74,15 +84,19 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 .contract-header{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:28px;margin-bottom:24px;box-shadow:var(--shadow)}
 .contract-header h1{font-size:24px;font-weight:800;color:var(--navy);margin-bottom:6px;letter-spacing:-.5px;font-family:var(--font-serif)}
 .contract-header .sub{font-size:15px;color:var(--text2);margin-bottom:20px;line-height:1.5}
-.contract-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-@media(min-width:500px){.contract-meta{grid-template-columns:repeat(4,1fr)}}
+.contract-meta{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:400px){.contract-meta{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:600px){.contract-meta{grid-template-columns:repeat(4,1fr)}}
 .meta-box{background:rgba(255,255,255,.6);backdrop-filter:blur(8px);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center}
 .meta-box-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:6px;font-weight:600}
-.meta-box-value{font-size:16px;font-weight:700;color:var(--navy)}
+.meta-box-value{font-size:16px;font-weight:700;color:var(--navy);word-break:break-word}
+@media(max-width:400px){.meta-box-value{font-size:14px}}
 
-/* ═══ ROLE TABS - Glass ═══ */
-.role-tabs{display:flex;gap:6px;background:rgba(255,255,255,.5);backdrop-filter:blur(8px);padding:6px;border-radius:var(--radius);margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--glass-border)}
-.role-tab{padding:14px 18px;font-size:14px;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;color:var(--text2);white-space:nowrap;flex:1;min-width:0;text-align:center}
+/* ═══ ROLE TABS - Glass, responsive stack ═══ */
+.role-tabs{display:flex;flex-wrap:wrap;gap:6px;background:rgba(255,255,255,.5);backdrop-filter:blur(8px);padding:6px;border-radius:var(--radius);margin-bottom:24px;border:1px solid var(--glass-border)}
+.role-tab{padding:12px 14px;font-size:13px;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;color:var(--text2);white-space:nowrap;flex:1;min-width:120px;text-align:center}
+@media(max-width:520px){.role-tabs{flex-direction:column;}.role-tab{min-width:100%;flex:none;padding:14px 16px}}
+@media(min-width:521px){.role-tab{min-width:140px;padding:14px 18px;font-size:14px}}
 .role-tab:hover{color:var(--navy)}
 .role-tab.active{background:var(--glass);color:var(--navy);box-shadow:var(--shadow);border:1px solid var(--glass-border)}
 
@@ -95,11 +109,14 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 .cli.done{background:var(--green-dim);border-color:var(--green-border)}
 .cli-num{font-size:13px;font-weight:700;color:var(--text3);min-width:28px;padding-top:2px}
 .cli.done .cli-num{color:var(--green)}
-.cli-check{width:24px;height:24px;border:2px solid var(--glass-border);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.cli.done .cli-check{background:var(--green);border-color:var(--green)}
-.cli.done .cli-check::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.cli-check{width:32px;height:32px;border:3px solid var(--text3);border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 1px 4px rgba(26,58,95,.08)}
+.cli:hover .cli-check,.cli:focus-within .cli-check{border-color:var(--navy);box-shadow:0 2px 8px rgba(26,58,95,.12)}
+.cli.done .cli-check{background:var(--green);border-color:var(--green);border-width:3px;box-shadow:0 2px 8px rgba(5,150,105,.25)}
+.cli.done .cli-check::after{content:'✓';color:#fff;font-size:18px;font-weight:700}
 .cli-text{font-size:15px;line-height:1.6;color:var(--text);flex:1}
 .cli.done .cli-text{color:var(--text2)}
+.cli.highlight{animation:itemHighlight 2s ease-out}
+@keyframes itemHighlight{0%{background:var(--amber-dim);border-color:var(--amber-border);box-shadow:0 0 0 4px rgba(217,119,6,.3)}50%{background:var(--amber-dim);border-color:var(--amber-border)}100%{background:var(--glass);border-color:var(--glass-border);box-shadow:none}}
 
 /* ═══ SIGN-OFF BLOCK - Glass ═══ */
 .signoff-block{background:var(--glass);backdrop-filter:blur(16px);border:2px solid rgba(72,201,245,.3);border-radius:var(--radius);padding:28px;margin-top:36px;box-shadow:var(--shadow)}
@@ -133,8 +150,30 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
 
 /* ═══ BACK BUTTON ═══ */
-.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 0;font-size:14px;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer;margin-bottom:16px}
-.btn-back:hover{color:var(--blue-light)}
+.btn-back{display:inline-flex;align-items:center;gap:8px;padding:10px 0;font-size:15px;font-weight:600;color:var(--navy);background:none;border:none;cursor:pointer;margin-bottom:20px}
+.btn-back:hover{color:var(--blue)}
+
+/* ═══ SIMPRO SYNCED BUTTON - Flashing green ═══ */
+.simpro-synced{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:14px;font-weight:600;border-radius:var(--radius-sm);border:none;box-shadow:0 4px 16px rgba(5,150,105,.35);animation:simproPulse 1.5s ease-in-out infinite}
+.simpro-synced img{height:24px;width:auto;filter:brightness(0) invert(1)}
+@keyframes simproPulse{0%,100%{box-shadow:0 4px 16px rgba(5,150,105,.35)}50%{box-shadow:0 4px 24px rgba(5,150,105,.6),0 0 20px rgba(5,150,105,.3)}}
+
+/* ═══ NOTES MODAL ═══ */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,58,95,.4);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.visible{display:flex}
+.modal{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:24px;max-width:420px;width:100%;box-shadow:var(--shadow-glass)}
+.modal h3{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.modal textarea{width:100%;min-height:100px;padding:14px;border:1px solid var(--glass-border);border-radius:var(--radius-sm);font-family:var(--font);font-size:15px;resize:vertical;margin-bottom:16px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+.cli-note-btn{flex-shrink:0;padding:8px 12px;font-size:13px;color:var(--text2);background:rgba(255,255,255,.8);border:1px solid var(--glass-border);border-radius:8px;cursor:pointer;transition:all .2s}
+.cli-note-btn:hover{color:var(--navy);border-color:var(--blue);background:var(--blue-dim)}
+.cli-note-btn.has-note{color:var(--blue);border-color:var(--blue);background:var(--blue-dim)}
+.cli-row{display:flex;align-items:flex-start;gap:16px}
+.cli-main{flex:1;min-width:0;display:flex;align-items:flex-start;gap:16px}
+
+/* ═══ SIGNOFF MODAL - Canvas responsive ═══ */
+.signoff-modal canvas{max-width:100%;height:auto}
+@media(max-width:440px){.signoff-modal{max-width:96vw!important}#signoff-canvas{width:100%!important;max-width:100%!important}}
 </style>
 </head>
 <body>
@@ -142,13 +181,18 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 <div class="topbar">
   <div class="topbar-inner">
     <a href="index.html" class="topbar-logo">
-      <img src="/images/victorian-projects-logo.png" alt="Victorian Projects">
+      <img src="images/victorian-projects-logo.png" alt="Victorian Projects">
     </a>
     <nav class="topbar-nav">
+      <a href="index.html" title="Back to Project Command Centre">Home</a>
       <a href="#" class="active" id="nav-dashboard">My Attention</a>
       <a href="#" id="nav-all">All CRAs</a>
     </nav>
   </div>
+</div>
+<div class="reminder-banner" id="reminder-banner">
+  <span id="reminder-text"></span>
+  <a href="#" id="reminder-link">View My Attention →</a>
 </div>
 
 <div class="main">
@@ -186,6 +230,35 @@ body{font-family:var(--font);background:linear-gradient(160deg,#f0f7ff 0%,#e8f4f
 </div>
 
 <button class="fab" id="fab" onclick="newCRA()" title="New CRA" style="display:none">+</button>
+
+<div class="modal-overlay" id="notes-modal" onclick="if(event.target===this)closeNotesModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h3 id="notes-modal-title">Note for item <span id="notes-modal-num"></span></h3>
+    <textarea id="notes-modal-text" placeholder="Add a note for this checklist item..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-primary" style="padding:8px 16px;font-size:13px" onclick="saveNote()">Save</button>
+      <button class="cli-note-btn" onclick="closeNotesModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="signoff-modal" onclick="if(event.target===this)closeSignoffModal()">
+  <div class="modal signoff-modal" onclick="event.stopPropagation()" style="max-width:420px">
+    <h3 id="signoff-modal-title">Sign off – <span id="signoff-modal-role"></span></h3>
+    <p style="font-size:14px;color:var(--text2);margin-bottom:14px">Draw your signature below (finger or mouse):</p>
+    <canvas id="signoff-canvas" width="380" height="120" style="display:block;width:100%;max-width:380px;height:120px;border:2px solid var(--glass-border);border-radius:var(--radius-sm);background:#fff;cursor:crosshair;touch-action:none"></canvas>
+    <p style="font-size:12px;color:var(--text3);margin-top:8px;margin-bottom:14px">Clear and redraw if needed.</p>
+    <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:18px;font-size:14px;color:var(--text)">
+      <input type="checkbox" id="signoff-confirm-cb" style="margin-top:3px;width:18px;height:18px" onchange="updateSignoffConfirmState()">
+      <span>I confirm I have checked all items for my role.</span>
+    </label>
+    <div class="modal-actions">
+      <button class="cli-note-btn" onclick="clearSignature()">Clear</button>
+      <button class="btn-primary" id="signoff-confirm-btn" style="padding:10px 20px" onclick="confirmSignoff()" disabled>Confirm</button>
+      <button class="cli-note-btn" onclick="closeSignoffModal()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -263,6 +336,7 @@ const DEFAULT_JOBS = [
     subcontractNo: 'RC072114',
     trade: 'Mechanical (Supply & Construction)',
     items: new Array(46).fill(false),
+    itemNotes: {},
     signoffs: { estimator: null, coordinator: null, pm: null, director: null },
     createdAt: new Date().toISOString()
   }
@@ -297,6 +371,25 @@ function saveJobs() {
 // ═══════════════════════════════════════════════════════
 // VIEWS
 // ═══════════════════════════════════════════════════════
+function updateReminderBanner() {
+  const jobs = getAttentionJobs();
+  const count = jobs.length;
+  const banner = document.getElementById('reminder-banner');
+  const text = document.getElementById('reminder-text');
+  const link = document.getElementById('reminder-link');
+  if (count > 0) {
+    text.textContent = count + ' CRA' + (count > 1 ? 's' : '') + ' awaiting your sign-off or in progress.';
+    link.onclick = e => {
+      e.preventDefault();
+      if (jobs.length > 0) openJob(jobs[0].id);
+      else showView('dashboard');
+    };
+    banner.classList.add('visible');
+  } else {
+    banner.classList.remove('visible');
+  }
+}
+
 function showView(view) {
   document.getElementById('view-dashboard').style.display = 'none';
   document.getElementById('view-all').style.display = 'none';
@@ -318,6 +411,7 @@ function showView(view) {
     document.getElementById('fab').style.display = 'flex';
     renderDetail();
   }
+  updateReminderBanner();
 }
 
 // Attention = jobs where completion < 100 or Director hasn't signed
@@ -387,12 +481,59 @@ function formatDate(s) {
   return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+let pendingHighlightIdx = null;
 function openJob(id) {
   currentJob = JOBS.find(j => j.id === id);
   if (!currentJob) return;
   if (!currentJob.items) currentJob.items = new Array(46).fill(false);
   if (!currentJob.signoffs) currentJob.signoffs = { estimator: null, coordinator: null, pm: null, director: null };
+  if (!currentJob.itemNotes) currentJob.itemNotes = {};
+  const items = currentJob.items || [];
+  const firstIncomplete = items.findIndex((v, i) => !v);
+  if (firstIncomplete >= 0) {
+    activeRole = CRA_ITEMS[firstIncomplete].role;
+    pendingHighlightIdx = firstIncomplete;
+  } else {
+    pendingHighlightIdx = null;
+  }
   showView('detail');
+  if (pendingHighlightIdx !== null) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.querySelector(`.cli[data-idx="${pendingHighlightIdx}"]`);
+        if (el) {
+          el.classList.add('highlight');
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => el.classList.remove('highlight'), 2500);
+        }
+        pendingHighlightIdx = null;
+      });
+    });
+  }
+}
+
+let notesModalIdx = null;
+function openNotesModal(idx) {
+  notesModalIdx = idx;
+  const j = currentJob;
+  if (!j) return;
+  j.itemNotes = j.itemNotes || {};
+  document.getElementById('notes-modal-num').textContent = idx + 1;
+  document.getElementById('notes-modal-text').value = j.itemNotes[String(idx)] || '';
+  document.getElementById('notes-modal').classList.add('visible');
+  document.getElementById('notes-modal-text').focus();
+}
+function closeNotesModal() {
+  notesModalIdx = null;
+  document.getElementById('notes-modal').classList.remove('visible');
+}
+function saveNote() {
+  if (notesModalIdx === null || !currentJob) return;
+  currentJob.itemNotes = currentJob.itemNotes || {};
+  currentJob.itemNotes[String(notesModalIdx)] = document.getElementById('notes-modal-text').value.trim();
+  saveJobs();
+  closeNotesModal();
+  renderDetail();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -406,8 +547,13 @@ function renderDetail() {
   const pct = Math.round((done / 46) * 100);
 
   document.getElementById('contract-header').innerHTML = `
-    <h1>${j.name}</h1>
-    <p class="sub">${j.client} · ${j.subcontractNo || ''} · ${j.trade || 'Mechanical'}</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px">
+      <div style="flex:1;min-width:0"><h1>${j.name}</h1><p class="sub">${j.client} · ${j.subcontractNo || ''} · ${j.trade || 'Mechanical'}</p></div>
+      <div class="simpro-synced" title="Synced with Simpro">
+        <img src="images/simpro-logo.png" alt="Simpro">
+        <span>Simpro synced</span>
+      </div>
+    </div>
     <div class="contract-meta">
       <div class="meta-box"><div class="meta-box-label">Contract Value</div><div class="meta-box-value">${j.valueFormatted || '$' + (j.value || 0).toLocaleString()}</div></div>
       <div class="meta-box"><div class="meta-box-label">Start</div><div class="meta-box-value">${formatDate(j.start)}</div></div>
@@ -445,10 +591,13 @@ function renderChecklistForRole() {
       <div class="checklist-items">
         ${items.map(({ text, index }) => {
           const checked = j.items[index];
+          const notes = (j.itemNotes || {})[String(index)] || '';
+          const hasNote = !!notes.trim();
           return `<div class="cli ${checked ? 'done' : ''}" onclick="toggleItem(${index})" data-idx="${index}">
             <span class="cli-num">${index + 1}</span>
             <div class="cli-check"></div>
             <div class="cli-text">${text}</div>
+            <button class="cli-note-btn ${hasNote ? 'has-note' : ''}" onclick="event.stopPropagation();openNotesModal(${index})" title="${hasNote ? 'Edit note' : 'Add note'}">${hasNote ? '📝' : 'Note'}</button>
           </div>`;
         }).join('')}
       </div>
@@ -462,6 +611,7 @@ function toggleItem(idx) {
   currentJob.items[idx] = !currentJob.items[idx];
   saveJobs();
   renderDetail();
+  updateReminderBanner();
 }
 
 function renderSignoffBlock() {
@@ -479,24 +629,125 @@ function renderSignoffBlock() {
           <div class="signoff-role">${roleMeta.name}</div>
           <div class="signoff-name">${signed ? signed.name : 'Pending'}</div>
           <div class="signoff-date">${signed ? formatDate(signed.date) : ''}</div>
-          ${!signed ? `<button class="btn-primary" style="margin-top:8px;padding:8px 16px;font-size:12px" onclick="signOff('${role}')">Sign off</button>` : ''}
+          ${!signed ? `<button class="btn-primary" style="margin-top:8px;padding:8px 16px;font-size:12px" onclick="openSignoffModal('${role}')">Sign off</button>` : (signed.signature ? `<img src="${signed.signature}" alt="Signature" style="margin-top:8px;max-height:36px;max-width:120px;border:1px solid var(--glass-border);border-radius:6px">` : '')}
         </div>`;
       }).join('')}
     </div>
   `;
 }
 
-function signOff(role) {
+let signoffModalRole = null;
+let signoffCanvasDrawn = false;
+
+function openSignoffModal(role) {
   if (!currentJob) return;
   const done = (currentJob.items || []).filter(Boolean).length;
   if (role === 'director' && done < 46) {
     alert('All 46 items must be complete before Director sign-off.');
     return;
   }
+  signoffModalRole = role;
+  signoffCanvasDrawn = false;
+  document.getElementById('signoff-modal-role').textContent = ROLES.find(r => r.id === role).name;
+  document.getElementById('signoff-confirm-cb').checked = false;
+  document.getElementById('signoff-confirm-btn').disabled = true;
+  const canvas = document.getElementById('signoff-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  document.getElementById('signoff-modal').classList.add('visible');
+  initSignatureCanvas();
+}
+
+function closeSignoffModal() {
+  signoffModalRole = null;
+  document.getElementById('signoff-modal').classList.remove('visible');
+}
+
+function clearSignature() {
+  const canvas = document.getElementById('signoff-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  signoffCanvasDrawn = false;
+  updateSignoffConfirmState();
+}
+
+function initSignatureCanvas() {
+  const canvas = document.getElementById('signoff-canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let lastX = 0, lastY = 0;
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+  }
+
+  function draw(x, y) {
+    ctx.strokeStyle = '#1a2d4a';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    lastX = x; lastY = y;
+    signoffCanvasDrawn = true;
+    updateSignoffConfirmState();
+  }
+
+  function handleDown(e) {
+    e.preventDefault();
+    drawing = true;
+    const pos = getPos(e);
+    lastX = pos.x; lastY = pos.y;
+  }
+  function handleMove(e) {
+    e.preventDefault();
+    if (!drawing) return;
+    const pos = getPos(e);
+    draw(pos.x, pos.y);
+  }
+  function handleUp(e) {
+    e.preventDefault();
+    drawing = false;
+  }
+
+  canvas.onpointerdown = handleDown;
+  canvas.onpointermove = handleMove;
+  canvas.onpointerup = handleUp;
+  canvas.onpointerleave = handleUp;
+  canvas.ontouchstart = handleDown;
+  canvas.ontouchmove = handleMove;
+  canvas.ontouchend = handleUp;
+}
+
+function updateSignoffConfirmState() {
+  const cb = document.getElementById('signoff-confirm-cb');
+  const btn = document.getElementById('signoff-confirm-btn');
+  if (cb && btn) btn.disabled = !(cb.checked && signoffCanvasDrawn);
+}
+
+function confirmSignoff() {
+  if (!currentJob || !signoffModalRole) return;
+  const canvas = document.getElementById('signoff-canvas');
+  const signatureData = canvas.toDataURL('image/png');
+  const roleName = signoffModalRole === 'director' ? 'Mat Sullivan' : signoffModalRole.charAt(0).toUpperCase() + signoffModalRole.slice(1);
   currentJob.signoffs = currentJob.signoffs || {};
-  currentJob.signoffs[role] = { name: role === 'director' ? 'Mat Sullivan' : role.charAt(0).toUpperCase() + role.slice(1), date: new Date().toISOString().slice(0, 10) };
+  currentJob.signoffs[signoffModalRole] = {
+    name: roleName,
+    date: new Date().toISOString().slice(0, 10),
+    signature: signatureData
+  };
   saveJobs();
+  closeSignoffModal();
   renderDetail();
+  updateReminderBanner();
 }
 
 function newCRA() {
@@ -508,12 +759,14 @@ function newCRA() {
     client: 'TBC', value: 0, valueFormatted: 'TBC',
     start: new Date().toISOString().slice(0, 10), completion: '',
     items: new Array(46).fill(false),
+    itemNotes: {},
     signoffs: { estimator: null, coordinator: null, pm: null, director: null },
     createdAt: new Date().toISOString()
   });
   saveJobs();
   currentJob = JOBS.find(j => j.id === id);
   showView('detail');
+  updateReminderBanner();
 }
 
 // Nav
@@ -523,6 +776,7 @@ document.getElementById('nav-all').onclick = e => { e.preventDefault(); showView
 // Init
 loadJobs();
 showView('dashboard');
+updateReminderBanner();
 </script>
 </body>
 </html>
