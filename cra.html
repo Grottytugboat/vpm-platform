@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0d6efd">
+<meta name="robots" content="noindex,nofollow">
+<title>CRA Review | Victorian Projects</title>
+<link rel="icon" href="/images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f8fafc;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--border-light:#cbd5e1;
+  --text:#0f172a;--text2:#475569;--text3:#64748b;
+  --blue:#0d6efd;--blue-light:#3b82f6;--blue-dim:rgba(13,110,253,.08);--blue-glow:rgba(13,110,253,.15);
+  --green:#059669;--green-dim:rgba(5,150,105,.08);--green-border:rgba(5,150,105,.2);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,.08);--amber-border:rgba(217,119,6,.2);
+  --red:#dc2626;--red-dim:rgba(220,38,38,.08);--red-border:rgba(220,38,38,.2);
+  --font:'DM Sans',system-ui,sans-serif;
+  --radius:12px;--radius-sm:8px;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 10px 40px -10px rgba(0,0,0,.15);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:80px}
+
+/* ═══ TOP BAR ═══ */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.topbar-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar-logo{font-size:18px;font-weight:700;color:var(--blue);letter-spacing:-.5px}
+.topbar-nav{display:flex;gap:8px}
+.topbar-nav a{padding:8px 14px;font-size:13px;font-weight:600;color:var(--text2);text-decoration:none;border-radius:var(--radius-sm);transition:all .2s}
+.topbar-nav a:hover{color:var(--blue);background:var(--blue-dim)}
+.topbar-nav a.active{color:var(--blue);background:var(--blue-dim)}
+
+/* ═══ MAIN ═══ */
+.main{max-width:900px;margin:0 auto;padding:20px;padding-bottom:100px}
+
+/* ═══ ATTENTION HERO ═══ */
+.attention-hero{background:linear-gradient(135deg,var(--blue) 0%,#4f46e5 100%);border-radius:16px;padding:28px;color:#fff;margin-bottom:24px;box-shadow:var(--shadow-lg)}
+.attention-hero h2{font-size:20px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+.attention-hero p{font-size:14px;opacity:.95;line-height:1.5}
+.attention-count{display:inline-block;background:rgba(255,255,255,.25);padding:6px 12px;border-radius:8px;font-weight:700;font-size:15px;margin-top:12px}
+
+/* ═══ JOB CARDS ═══ */
+.jobs-list{display:flex;flex-direction:column;gap:12px}
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.job-card:hover{border-color:var(--blue);box-shadow:0 4px 20px -4px rgba(13,110,253,.2);transform:translateY(-1px)}
+.job-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.job-card-name{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.job-card-status{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.status-active{background:var(--green-dim);color:var(--green)}
+.status-review{background:var(--amber-dim);color:var(--amber)}
+.status-complete{background:var(--blue-dim);color:var(--blue)}
+.job-card-meta{display:flex;flex-wrap:wrap;gap:12px 20px;font-size:13px;color:var(--text2);margin-bottom:12px}
+.job-card-meta span{display:flex;align-items:center;gap:4px}
+.job-card-progress{margin-top:12px}
+.progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.progress-fill.green{background:linear-gradient(90deg,#059669,#10b981)}
+.progress-fill.blue{background:linear-gradient(90deg,#0d6efd,#3b82f6)}
+.progress-fill.amber{background:linear-gradient(90deg,#d97706,#f59e0b)}
+.progress-fill.red{background:linear-gradient(90deg,#dc2626,#ef4444)}
+.progress-text{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:4px}
+
+/* ═══ CONTRACT HEADER ═══ */
+.contract-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.contract-header h1{font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px;letter-spacing:-.5px}
+.contract-header .sub{font-size:14px;color:var(--text2);margin-bottom:16px}
+.contract-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(min-width:500px){.contract-meta{grid-template-columns:repeat(4,1fr)}}
+.meta-box{background:var(--surface2);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.meta-box-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}
+.meta-box-value{font-size:15px;font-weight:700;color:var(--text)}
+
+/* ═══ ROLE TABS ═══ */
+.role-tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:var(--radius);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.role-tab{padding:12px 16px;font-size:13px;font-weight:600;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;color:var(--text2);white-space:nowrap;flex:1;min-width:0;text-align:center}
+.role-tab:hover{color:var(--text)}
+.role-tab.active{background:var(--surface);color:var(--blue);box-shadow:var(--shadow)}
+
+/* ═══ CHECKLIST ITEMS ═══ */
+.checklist-section{margin-bottom:24px}
+.checklist-section-title{font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.checklist-items{display:flex;flex-direction:column;gap:2px}
+.cli{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s}
+.cli:hover{background:var(--surface2)}
+.cli.done{background:var(--green-dim);border-color:var(--green-border)}
+.cli-num{font-size:12px;font-weight:700;color:var(--text3);min-width:24px;padding-top:2px}
+.cli.done .cli-num{color:var(--green)}
+.cli-check{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cli.done .cli-check{background:var(--green);border-color:var(--green)}
+.cli.done .cli-check::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.cli-text{font-size:14px;line-height:1.5;color:var(--text);flex:1}
+.cli.done .cli-text{color:var(--text2)}
+
+/* ═══ SIGN-OFF BLOCK ═══ */
+.signoff-block{background:var(--surface);border:2px solid var(--blue);border-radius:var(--radius);padding:24px;margin-top:32px}
+.signoff-block h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.signoff-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:500px){.signoff-grid{grid-template-columns:1fr}}
+.signoff-item{padding:14px;background:var(--surface2);border-radius:var(--radius-sm)}
+.signoff-item.done{background:var(--green-dim);border:1px solid var(--green-border)}
+.signoff-role{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}
+.signoff-name{font-size:14px;font-weight:600;color:var(--text)}
+.signoff-date{font-size:12px;color:var(--text3);margin-top:4px}
+
+/* ═══ FAB ═══ */
+.fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:var(--blue);color:#fff;border:none;border-radius:50%;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(13,110,253,.4);transition:all .2s;display:flex;align-items:center;justify-content:center;z-index:50}
+.fab:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(13,110,253,.5)}
+
+/* ═══ BREADCRUMB ═══ */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:20px;flex-wrap:wrap}
+.breadcrumb a{color:var(--text2);text-decoration:none}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--text3)}
+.bc-sep{font-size:10px}
+
+/* ═══ EMPTY STATE ═══ */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state-icon{font-size:48px;margin-bottom:16px;opacity:.5}
+.empty-state h3{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.empty-state p{font-size:14px;margin-bottom:20px;max-width:300px;margin-left:auto;margin-right:auto}
+.btn-primary{display:inline-block;padding:12px 24px;background:var(--blue);color:#fff;font-weight:600;font-size:14px;border-radius:var(--radius-sm);border:none;cursor:pointer;text-decoration:none}
+.btn-primary:hover{background:var(--blue-light)}
+
+/* ═══ BACK BUTTON ═══ */
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:8px 0;font-size:14px;font-weight:600;color:var(--blue);background:none;border:none;cursor:pointer;margin-bottom:16px}
+.btn-back:hover{color:var(--blue-light)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="topbar-logo" style="text-decoration:none;color:inherit">Victorian Projects</a>
+    <nav class="topbar-nav">
+      <a href="#" class="active" id="nav-dashboard">My Attention</a>
+      <a href="#" id="nav-all">All CRAs</a>
+    </nav>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- DASHBOARD: Needs Attention -->
+  <div id="view-dashboard">
+    <div class="attention-hero" id="attention-hero">
+      <h2>What needs your attention</h2>
+      <p id="attention-desc">Items awaiting your sign-off or overdue.</p>
+      <span class="attention-count" id="attention-count">0 items</span>
+    </div>
+    <div id="attention-list" class="jobs-list"></div>
+    <div id="attention-empty" class="empty-state" style="display:none">
+      <div class="empty-state-icon">✓</div>
+      <h3>All caught up</h3>
+      <p>No items need your attention right now.</p>
+    </div>
+  </div>
+
+  <!-- ALL CRAs LIST -->
+  <div id="view-all" style="display:none">
+    <h2 style="font-size:20px;font-weight:700;margin-bottom:20px">All CRA Reviews</h2>
+    <div id="all-list" class="jobs-list"></div>
+  </div>
+
+  <!-- CRA DETAIL -->
+  <div id="view-detail" style="display:none">
+    <button class="btn-back" onclick="showView('dashboard')">← Back</button>
+    <div class="contract-header" id="contract-header"></div>
+    <div class="role-tabs" id="role-tabs"></div>
+    <div id="checklist-content"></div>
+    <div class="signoff-block" id="signoff-block"></div>
+  </div>
+
+</div>
+
+<button class="fab" id="fab" onclick="newCRA()" title="New CRA" style="display:none">+</button>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CRA CHECKLIST - 46 ITEMS (from Document 3)
+// ═══════════════════════════════════════════════════════
+const CRA_ITEMS = [
+  { role:'estimator', text:'Contract and scope match quote. Second count of material quantities.' },
+  { role:'estimator', text:'Scope of works conformance verified.' },
+  { role:'estimator', text:'40% net profit minimum verified.' },
+  { role:'estimator', text:'New client credit application (VG-AF-068) if applicable.' },
+  { role:'estimator', text:'NCI List check completed.' },
+  { role:'estimator', text:'Credit check and Director approval obtained.' },
+  { role:'estimator', text:'Credit limit approval obtained.' },
+  { role:'estimator', text:'Finance Manager sign-off received.' },
+  { role:'estimator', text:'PPSR registration completed.' },
+  { role:'estimator', text:'Construction drawings receipt confirmed.' },
+  { role:'estimator', text:'Material quotes vs budget verified.' },
+  { role:'estimator', text:'Alternative fans justification if applicable.' },
+  { role:'estimator', text:'BMS verification completed.' },
+  { role:'estimator', text:'Tender vs construction drawing variance reviewed.' },
+  { role:'estimator', text:'Handover documentation to PM/Co-ord completed.' },
+  { role:'estimator', text:'Detailed Simpro description completed.' },
+  { role:'estimator', text:'Estimator final review sign-off.' },
+  { role:'coordinator', text:'Workshop drawings alignment with contract verified.' },
+  { role:'coordinator', text:'Unit availability per program confirmed.' },
+  { role:'coordinator', text:'Contract = quote value confirmed.' },
+  { role:'coordinator', text:'Payment terms verification (>30 days EOM) completed.' },
+  { role:'coordinator', text:'Retentions entered in Simpro.' },
+  { role:'coordinator', text:'Late payment policy approval obtained.' },
+  { role:'coordinator', text:'WSD builder/consultant approval status confirmed.' },
+  { role:'coordinator', text:'WSD uploaded to shared drive.' },
+  { role:'coordinator', text:'SWMS established.' },
+  { role:'coordinator', text:'Correct Simpro payment terms set.' },
+  { role:'coordinator', text:'Site visit booked.' },
+  { role:'coordinator', text:'Complete job folder (Admin, WSD, Commissioning, Photos, ITP, Material List, Tech Data, Rough In, Supplier Quotes, SWMS).' },
+  { role:'coordinator', text:'Schedule & milestone feasibility review completed.' },
+  { role:'pm', text:'Contract/scope vs tender alignment verified.' },
+  { role:'pm', text:'Estimator review of subcontract issues completed.' },
+  { role:'pm', text:'PM experience assessment completed.' },
+  { role:'pm', text:'Plant equipment requirements confirmed.' },
+  { role:'pm', text:'Builder program & milestone feasibility reviewed.' },
+  { role:'pm', text:'Retention terms verification completed.' },
+  { role:'pm', text:'Liquidated damages capping (target 50%) verified.' },
+  { role:'pm', text:'Director contract acceptance obtained.' },
+  { role:'pm', text:'40% profit feasibility confirmed.' },
+  { role:'pm', text:'Simpro margin verification completed.' },
+  { role:'pm', text:'Supervisor hours discussion completed.' },
+  { role:'pm', text:'Plans and budget review with supervisor completed.' },
+  { role:'pm', text:'Electrical requirements communicated.' },
+  { role:'pm', text:'Tech data folder access confirmed.' },
+  { role:'pm', text:'LD cap duplicate check completed.' },
+  { role:'director', text:'Final sign-off: All job aspects reviewed before construction starts.' }
+];
+
+const ROLES = [
+  { id:'estimator', name:'Estimator', range:'1-17', color:'#0d6efd' },
+  { id:'coordinator', name:'Project Co-ordinator', range:'18-30', color:'#6366f1' },
+  { id:'pm', name:'Project Manager', range:'31-45', color:'#8b5cf6' },
+  { id:'director', name:'Director', range:'46', color:'#059669' }
+];
+
+// ═══════════════════════════════════════════════════════
+// SAMPLE DATA - Toolern Vale
+// ═══════════════════════════════════════════════════════
+const DEFAULT_JOBS = [
+  {
+    id: 'toolern-vale',
+    name: 'Toolern Vale District Primary School',
+    client: 'Arc3 Pty Ltd',
+    builder: 'Arc3',
+    value: 94700,
+    valueFormatted: '$94,700',
+    start: '2026-04-30',
+    completion: '2026-07-16',
+    subcontractNo: 'RC072114',
+    trade: 'Mechanical (Supply & Construction)',
+    items: new Array(46).fill(false),
+    signoffs: { estimator: null, coordinator: null, pm: null, director: null },
+    createdAt: new Date().toISOString()
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let JOBS = [];
+let currentJob = null;
+const STORAGE_KEY = 'vpm_cra_jobs';
+
+function loadJobs() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      JOBS = JSON.parse(raw);
+    } else {
+      JOBS = JSON.parse(JSON.stringify(DEFAULT_JOBS));
+      saveJobs();
+    }
+  } catch (e) {
+    JOBS = JSON.parse(JSON.stringify(DEFAULT_JOBS));
+    saveJobs();
+  }
+}
+
+function saveJobs() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(JOBS));
+}
+
+// ═══════════════════════════════════════════════════════
+// VIEWS
+// ═══════════════════════════════════════════════════════
+function showView(view) {
+  document.getElementById('view-dashboard').style.display = 'none';
+  document.getElementById('view-all').style.display = 'none';
+  document.getElementById('view-detail').style.display = 'none';
+  document.getElementById('fab').style.display = 'none';
+  document.querySelectorAll('.topbar-nav a').forEach(a => a.classList.remove('active'));
+
+  if (view === 'dashboard') {
+    document.getElementById('view-dashboard').style.display = 'block';
+    document.getElementById('nav-dashboard').classList.add('active');
+    renderAttention();
+  } else if (view === 'all') {
+    document.getElementById('view-all').style.display = 'block';
+    document.getElementById('nav-all').classList.add('active');
+    document.getElementById('fab').style.display = 'flex';
+    renderAll();
+  } else if (view === 'detail') {
+    document.getElementById('view-detail').style.display = 'block';
+    document.getElementById('fab').style.display = 'flex';
+    renderDetail();
+  }
+}
+
+// Attention = jobs where completion < 100 or Director hasn't signed
+function getAttentionJobs() {
+  return JOBS.filter(j => {
+    const done = (j.items || []).filter(Boolean).length;
+    const pct = Math.round((done / 46) * 100);
+    const directorSigned = j.signoffs && j.signoffs.director;
+    return pct < 100 || !directorSigned;
+  });
+}
+
+function renderAttention() {
+  const jobs = getAttentionJobs();
+  const count = jobs.length;
+
+  document.getElementById('attention-desc').textContent = count > 0
+    ? `${count} CRA${count > 1 ? 's' : ''} need completion or your sign-off.`
+    : 'Items awaiting your sign-off or overdue.';
+  document.getElementById('attention-count').textContent = `${count} item${count !== 1 ? 's' : ''}`;
+
+  const listEl = document.getElementById('attention-list');
+  const emptyEl = document.getElementById('attention-empty');
+
+  if (jobs.length === 0) {
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  listEl.innerHTML = jobs.map(j => renderJobCard(j)).join('');
+}
+
+function renderAll() {
+  const listEl = document.getElementById('all-list');
+  listEl.innerHTML = JOBS.map(j => renderJobCard(j)).join('');
+}
+
+function renderJobCard(j) {
+  const done = (j.items || []).filter(Boolean).length;
+  const pct = Math.min(100, Math.round((done / 46) * 100));
+  const directorSigned = j.signoffs && j.signoffs.director;
+  const status = directorSigned ? 'complete' : pct > 80 ? 'review' : 'active';
+  const fc = pct === 100 ? 'green' : pct > 50 ? 'blue' : pct > 0 ? 'amber' : 'red';
+
+  return `<div class="job-card" onclick="openJob('${j.id}')">
+    <div class="job-card-header">
+      <div class="job-card-name">${j.name}</div>
+      <span class="job-card-status status-${status}">${directorSigned ? 'COMPLETE' : pct > 80 ? 'READY FOR SIGN-OFF' : 'IN PROGRESS'}</span>
+    </div>
+    <div class="job-card-meta">
+      <span>📋 ${j.client}</span>
+      <span>💰 ${j.valueFormatted || '$' + j.value?.toLocaleString()}</span>
+      <span>📅 ${formatDate(j.start)} – ${formatDate(j.completion)}</span>
+    </div>
+    <div class="job-card-progress">
+      <div class="progress-bar"><div class="progress-fill ${fc}" style="width:${pct}%"></div></div>
+      <div class="progress-text"><span>${done}/46 items</span><span>${pct}%</span></div>
+    </div>
+  </div>`;
+}
+
+function formatDate(s) {
+  if (!s) return 'TBC';
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function openJob(id) {
+  currentJob = JOBS.find(j => j.id === id);
+  if (!currentJob) return;
+  if (!currentJob.items) currentJob.items = new Array(46).fill(false);
+  if (!currentJob.signoffs) currentJob.signoffs = { estimator: null, coordinator: null, pm: null, director: null };
+  showView('detail');
+}
+
+// ═══════════════════════════════════════════════════════
+// DETAIL VIEW
+// ═══════════════════════════════════════════════════════
+let activeRole = 'estimator';
+
+function renderDetail() {
+  const j = currentJob;
+  const done = (j.items || []).filter(Boolean).length;
+  const pct = Math.round((done / 46) * 100);
+
+  document.getElementById('contract-header').innerHTML = `
+    <h1>${j.name}</h1>
+    <p class="sub">${j.client} · ${j.subcontractNo || ''} · ${j.trade || 'Mechanical'}</p>
+    <div class="contract-meta">
+      <div class="meta-box"><div class="meta-box-label">Contract Value</div><div class="meta-box-value">${j.valueFormatted || '$' + (j.value || 0).toLocaleString()}</div></div>
+      <div class="meta-box"><div class="meta-box-label">Start</div><div class="meta-box-value">${formatDate(j.start)}</div></div>
+      <div class="meta-box"><div class="meta-box-label">Completion</div><div class="meta-box-value">${formatDate(j.completion)}</div></div>
+      <div class="meta-box"><div class="meta-box-label">Progress</div><div class="meta-box-value">${pct}%</div></div>
+    </div>
+  `;
+
+  document.getElementById('role-tabs').innerHTML = ROLES.map(r => {
+    const indices = CRA_ITEMS.map((it, i) => it.role === r.id ? i : -1).filter(i => i >= 0);
+    let roleDoneCount = 0;
+    indices.forEach(i => { if (j.items[i]) roleDoneCount++; });
+    return `<div class="role-tab ${r.id === activeRole ? 'active' : ''}" onclick="setRole('${r.id}')">${r.name}<br><small style="font-size:11px;opacity:.8">${roleDoneCount}/${indices.length}</small></div>`;
+  }).join('');
+
+  renderChecklistForRole();
+  renderSignoffBlock();
+}
+
+function setRole(role) {
+  activeRole = role;
+  document.querySelectorAll('.role-tab').forEach((t, i) => {
+    t.classList.toggle('active', ROLES[i].id === role);
+  });
+  renderChecklistForRole();
+}
+
+function renderChecklistForRole() {
+  const j = currentJob;
+  const items = CRA_ITEMS.map((it, i) => ({ ...it, index: i })).filter(it => it.role === activeRole);
+
+  document.getElementById('checklist-content').innerHTML = `
+    <div class="checklist-section">
+      <div class="checklist-section-title">${ROLES.find(r => r.id === activeRole).name} checks (${ROLES.find(r => r.id === activeRole).range})</div>
+      <div class="checklist-items">
+        ${items.map(({ text, index }) => {
+          const checked = j.items[index];
+          return `<div class="cli ${checked ? 'done' : ''}" onclick="toggleItem(${index})" data-idx="${index}">
+            <span class="cli-num">${index + 1}</span>
+            <div class="cli-check"></div>
+            <div class="cli-text">${text}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleItem(idx) {
+  if (!currentJob) return;
+  if (!currentJob.items) currentJob.items = new Array(46).fill(false);
+  currentJob.items[idx] = !currentJob.items[idx];
+  saveJobs();
+  renderDetail();
+}
+
+function renderSignoffBlock() {
+  const j = currentJob;
+  const s = j.signoffs || {};
+
+  document.getElementById('signoff-block').innerHTML = `
+    <h3>Sign-off block</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">All 46 items must be complete before final Director sign-off.</p>
+    <div class="signoff-grid">
+      ${['estimator','coordinator','pm','director'].map(role => {
+        const signed = s[role];
+        const roleMeta = ROLES.find(r => r.id === role);
+        return `<div class="signoff-item ${signed ? 'done' : ''}">
+          <div class="signoff-role">${roleMeta.name}</div>
+          <div class="signoff-name">${signed ? signed.name : 'Pending'}</div>
+          <div class="signoff-date">${signed ? formatDate(signed.date) : ''}</div>
+          ${!signed ? `<button class="btn-primary" style="margin-top:8px;padding:8px 16px;font-size:12px" onclick="signOff('${role}')">Sign off</button>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+function signOff(role) {
+  if (!currentJob) return;
+  const done = (currentJob.items || []).filter(Boolean).length;
+  if (role === 'director' && done < 46) {
+    alert('All 46 items must be complete before Director sign-off.');
+    return;
+  }
+  currentJob.signoffs = currentJob.signoffs || {};
+  currentJob.signoffs[role] = { name: role === 'director' ? 'Mat Sullivan' : role.charAt(0).toUpperCase() + role.slice(1), date: new Date().toISOString().slice(0, 10) };
+  saveJobs();
+  renderDetail();
+}
+
+function newCRA() {
+  const name = prompt('Project name:');
+  if (!name) return;
+  const id = 'cra-' + Date.now();
+  JOBS.push({
+    id, name,
+    client: 'TBC', value: 0, valueFormatted: 'TBC',
+    start: new Date().toISOString().slice(0, 10), completion: '',
+    items: new Array(46).fill(false),
+    signoffs: { estimator: null, coordinator: null, pm: null, director: null },
+    createdAt: new Date().toISOString()
+  });
+  saveJobs();
+  currentJob = JOBS.find(j => j.id === id);
+  showView('detail');
+}
+
+// Nav
+document.getElementById('nav-dashboard').onclick = e => { e.preventDefault(); showView('dashboard'); };
+document.getElementById('nav-all').onclick = e => { e.preventDefault(); showView('all'); };
+
+// Init
+loadJobs();
+showView('dashboard');
+</script>
+</body>
+</html>
